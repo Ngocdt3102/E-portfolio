@@ -3,429 +3,383 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đặng Thọ Ngọc | ePortfolio V3</title>
+    <title>Đặng Thọ Ngọc | VIP Portfolio</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest" defer></script>
 
     <style>
-        /* CSS VARIABLES */
+        /* ================= CSS VARIABLES VIP ================= */
         :root {
-            --primary: #2563eb;
-            --primary-light: #dbeafe;
-            --secondary: #64748b;
+            --primary: #4f46e5;
+            --primary-light: #e0e7ff;
+            --secondary: #0ea5e9;
             --bg-white: #ffffff;
             --bg-light: #f8fafc;
-            --text-main: #1e293b;
-            --text-muted: #475569;
-            --accent: #3b82f6;
-            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent: #38bdf8;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        /* RESET & BASE */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* ================= RESET & BASE ================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
         body {
             font-family: 'Inter', sans-serif;
             color: var(--text-main);
             line-height: 1.7;
-            background-color: var(--bg-white);
+            background-color: var(--bg-light);
+            background-image: radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.05) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.05) 0%, transparent 20%);
+            overflow-x: hidden;
             scroll-behavior: smooth;
         }
-        h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; font-weight: 700; }
+        h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; font-weight: 700; letter-spacing: -0.02em; }
         ul { list-style: none; }
         a { text-decoration: none; color: inherit; }
+        svg.lucide { width: 24px; height: 24px; stroke-width: 2; }
 
-        /* Đảm bảo Icon SVG có kích thước mặc định */
-        svg.lucide {
-            width: 24px;
-            height: 24px;
-            stroke-width: 2;
+        /* ================= CUSTOM CURSOR (VIP EFFECT) ================= */
+        .cursor-dot, .cursor-outline {
+            position: fixed; top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%; z-index: 9999; pointer-events: none;
+        }
+        .cursor-dot { width: 8px; height: 8px; background-color: var(--primary); }
+        .cursor-outline {
+            width: 40px; height: 40px;
+            border: 2px solid rgba(79, 70, 229, 0.5);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        .cursor-hover .cursor-outline {
+            width: 60px; height: 60px;
+            background-color: rgba(79, 70, 229, 0.1); border-color: transparent;
         }
 
-        /* NAVIGATION */
+        /* ================= NAVIGATION ================= */
         nav {
             display: flex; justify-content: space-between; align-items: center;
             padding: 1.2rem 10%; position: fixed; width: 100%; top: 0;
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px);
-            z-index: 1000; transition: var(--transition);
-            border-bottom: 1px solid #f1f5f9;
+            background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            z-index: 1000; transition: var(--transition); border-bottom: 1px solid var(--glass-border);
         }
-        .logo { font-size: 1.4rem; font-weight: 800; }
-        .logo span { color: var(--primary); }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--text-main); }
+        .logo span { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .nav-links { display: flex; gap: 2.5rem; }
-        .nav-links a { font-weight: 500; font-size: 0.95rem; transition: var(--transition); color: var(--text-muted); }
+        .nav-links a { font-weight: 500; font-size: 0.95rem; color: var(--text-muted); transition: var(--transition); position: relative; }
+        .nav-links a::after {
+            content: ''; position: absolute; width: 0; height: 2px;
+            bottom: -5px; left: 0; background: var(--primary); transition: var(--transition);
+        }
         .nav-links a:hover { color: var(--primary); }
+        .nav-links a:hover::after { width: 100%; }
+        
+        .hamburger { display: none; cursor: pointer; color: var(--text-main); z-index: 1001; }
 
-        /* HERO SECTION */
+        /* ================= HERO SECTION ================= */
         .hero {
             height: 100vh; display: flex; align-items: center; justify-content: center;
-            background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%);
-            text-align: center; padding-top: 80px;
+            text-align: center; padding-top: 80px; position: relative;
         }
-        .hero-content p.intro { color: var(--primary); font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem; }
-        .hero-content h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 1.5rem; }
-        .hero-content .highlight { background: linear-gradient(to right, #2563eb, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero-desc { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 2.5rem; }
-
-        /* BUTTONS */
-        .btn-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-        .btn { padding: 0.8rem 2rem; border-radius: 8px; font-weight: 600; transition: var(--transition); cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; }
-        .btn-primary { background: var(--primary); color: white; box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3); }
-        .btn-primary:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.4); }
-        .btn-outline { border: 2px solid var(--primary); color: var(--primary); }
-        .btn-outline:hover { background: var(--primary-light); transform: translateY(-3px); }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: linear-gradient(rgba(79, 70, 229, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(79, 70, 229, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px; z-index: -1;
+        }
+        .hero-content p.intro {
+            display: inline-block; padding: 0.5rem 1.5rem; border-radius: 50px;
+            background: var(--primary-light); color: var(--primary);
+            font-weight: 600; letter-spacing: 1px; margin-bottom: 1.5rem;
+            border: 1px solid rgba(79, 70, 229, 0.2);
+        }
+        .hero-content h1 { font-size: 4.5rem; line-height: 1.1; margin-bottom: 1.5rem; }
+        .hero-content .highlight {
+            background: linear-gradient(to right, #4f46e5, #0ea5e9, #4f46e5);
+            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite;
+        }
+        @keyframes shine { to { background-position: 200% center; } }
         
-        .btn-small { padding: 0.5rem 1rem; font-size: 0.85rem; border-radius: 6px; border: 1px solid #e2e8f0; transition: var(--transition); font-weight: 600;}
+        .hero-desc { font-size: 1.25rem; color: var(--text-muted); max-width: 650px; margin: 0 auto 2.5rem; }
+
+        .btn-group { display: flex; gap: 1.5rem; justify-content: center; }
+        .btn {
+            padding: 0.8rem 2.2rem; border-radius: 12px; font-weight: 600; transition: var(--transition);
+            display: inline-flex; align-items: center; gap: 0.5rem; position: relative; overflow: hidden;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white;
+            box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4); border: none;
+        }
+        .btn-primary::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: 0.5s;
+        }
+        .btn-primary:hover::before { left: 100%; }
+        .btn-primary:hover { transform: translateY(-5px); box-shadow: 0 15px 25px -5px rgba(79, 70, 229, 0.5); }
+        
+        .btn-outline {
+            background: var(--glass-bg); border: 2px solid var(--primary); color: var(--primary);
+            backdrop-filter: blur(5px);
+        }
+        .btn-outline:hover { background: var(--primary); color: white; transform: translateY(-5px); }
+
+        /* ================= SECTIONS BASE ================= */
+        section { padding: 100px 10%; position: relative; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header h2 { font-size: 2.5rem; margin-bottom: 1rem; color: var(--text-main); }
+        .section-header .underline {
+            width: 80px; height: 5px; margin: 0 auto; border-radius: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        /* ================= ABOUT VIP ================= */
+        .about-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; align-items: center; }
+        .about-img-container {
+            position: relative; border-radius: 24px; aspect-ratio: 4/5;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+        }
+        .about-img-container::after {
+            content: ''; position: absolute; top: -15px; left: -15px; right: 15px; bottom: 15px;
+            border: 2px dashed var(--primary); border-radius: 24px; z-index: -1; transition: var(--transition);
+        }
+        .about-img-container:hover::after { top: -20px; left: -20px; right: 20px; bottom: 20px; }
+        .about-img-container img { width: 100%; height: 100%; object-fit: cover; border-radius: 24px; }
+        
+        .about-text h3 { font-size: 2rem; margin-bottom: 1.5rem; color: var(--text-main); }
+        .about-text p { margin-bottom: 1.2rem; color: var(--text-muted); font-size: 1.05rem;}
+        
+        .personal-details {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem;
+            background: rgba(255,255,255,0.6); backdrop-filter: blur(10px);
+            padding: 2rem; border-radius: 16px; border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+        }
+        .detail-item strong { display: block; color: var(--primary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;}
+        .detail-item span { font-weight: 600; color: var(--text-main); font-size: 1.1rem; }
+
+        /* ================= SKILLS (RUY BĂNG CHUYỂN ĐỘNG VIP) ================= */
+        .skills-ribbons-wrapper { display: flex; flex-direction: column; gap: 1.5rem; overflow: hidden; padding: 2rem 0; }
+        .marquee-container { width: 100%; overflow: hidden; white-space: nowrap; position: relative; }
+        .marquee-container::before, .marquee-container::after {
+            content: ''; position: absolute; top: 0; width: 150px; height: 100%; z-index: 2;
+        }
+        .marquee-container::before { left: 0; background: linear-gradient(to right, var(--bg-light) 0%, transparent 100%); }
+        .marquee-container::after { right: 0; background: linear-gradient(to left, var(--bg-light) 0%, transparent 100%); }
+
+        .marquee-content { display: inline-flex; gap: 1.5rem; padding-right: 1.5rem; animation: scrollLeft 25s linear infinite; }
+        .marquee-content.reverse { animation: scrollRight 30s linear infinite; }
+        .marquee-container:hover .marquee-content { animation-play-state: paused; }
+
+        @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        @keyframes scrollRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+
+        .skill-badge {
+            display: inline-flex; align-items: center; gap: 1rem;
+            background: white; padding: 1rem 1.5rem; border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #e2e8f0; transition: var(--transition);
+        }
+        .skill-badge:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px rgba(79, 70, 229, 0.15); border-color: var(--primary); }
+        .skill-badge i { color: var(--primary); width: 24px; height: 24px; }
+        .skill-badge .name { font-weight: 700; font-size: 1rem; color: var(--text-main); }
+        .skill-badge .level { font-size: 0.85rem; color: var(--primary); background: var(--primary-light); padding: 0.2rem 0.8rem; border-radius: 20px; font-weight: 600;}
+
+        /* ================= CARDS VIP (PROJECTS & ACTIVITIES) ================= */
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 3rem; }
+        
+        .vip-card {
+            background: white; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid rgba(255,255,255,0.8);
+            transition: var(--transition); position: relative;
+        }
+        .vip-card:hover {
+            transform: translateY(-12px); box-shadow: 0 30px 60px -10px rgba(79, 70, 229, 0.15); border-color: var(--primary-light);
+        }
+        .card-img { height: 220px; overflow: hidden; position: relative; }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .vip-card:hover .card-img img { transform: scale(1.1); }
+        
+        .card-content { padding: 2rem; }
+        .card-content h4 { font-size: 1.3rem; margin-bottom: 0.8rem; color: var(--text-main); }
+        .card-content p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6;}
+        
+        .tech-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.5rem; }
+        .tech-tags span { background: var(--bg-light); color: var(--text-main); padding: 0.4rem 1rem; border-radius: 8px; font-size: 0.75rem; font-weight: 600; border: 1px solid #e2e8f0; }
+        
+        .card-actions { display: flex; gap: 1rem; border-top: 1px solid #f1f5f9; padding-top: 1.5rem; }
+        .btn-small { background: white; border: 1px solid #e2e8f0; padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 600; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.4rem; transition: var(--transition); }
         .btn-small:hover { background: var(--primary); color: white; border-color: var(--primary); }
 
-        /* SECTIONS */
-        section { padding: 100px 10%; }
-        .section-header { text-align: center; margin-bottom: 4rem; }
-        .section-header h2 { font-size: 2.2rem; margin-bottom: 1rem; }
-        .section-header .underline { width: 60px; height: 4px; background: var(--primary); margin: 0 auto; border-radius: 2px; }
-
-        /* ABOUT SECTION & TIMELINE */
-        .about-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; align-items: start; }
-        .about-img-container {
-            position: relative; border-radius: 20px; aspect-ratio: 4/5;
-            overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
-            /* Thêm class floating */
-            animation: float 6s ease-in-out infinite;
+        /* ================= ACTIVITIES CARD OVERRIDE ================= */
+        .activity-card { 
+            display: flex; 
+            flex-direction: row; 
+            align-items: stretch; /* Ép 2 cột Ảnh và Chữ luôn có chiều cao bằng nhau */
         }
-        .about-img-container img { width: 100%; height: 100%; object-fit: cover; }
         
-        .about-text h3 { font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--primary); }
-        .about-text p { margin-bottom: 1.2rem; color: var(--text-muted); }
-
-        .personal-details { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; background: var(--bg-light); padding: 1.5rem; border-radius: 12px; margin-top: 1.5rem; }
-        .detail-item strong { display: block; color: var(--text-main); }
-
-        /* TIMELINE */
-        .timeline-container { margin-top: 3rem; }
-        .timeline-container h4 { margin-bottom: 1.5rem; font-size: 1.3rem; }
-        .timeline { border-left: 2px solid var(--primary-light); padding-left: 1.5rem; position: relative; }
-        .timeline-item { margin-bottom: 2rem; position: relative; }
-        .timeline-item::before { content: ''; position: absolute; left: -1.85rem; top: 0.3rem; width: 12px; height: 12px; border-radius: 50%; background: var(--primary); border: 3px solid white; box-shadow: 0 0 0 2px var(--primary-light); }
-        .timeline-date { font-size: 0.85rem; color: var(--primary); font-weight: 600; margin-bottom: 0.3rem; }
-        .timeline-content h5 { font-size: 1.1rem; margin-bottom: 0.3rem; }
-        .timeline-content p { font-size: 0.95rem; margin: 0; }
-
-        /* SKILLS SECTION MỚI */
-        .expertise-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
-            gap: 1.5rem; 
-            margin-bottom: 3rem; 
-        }
-        .skill-card { 
-            background: white; padding: 1.5rem; border-radius: 12px; 
-            border: 1px solid #f1f5f9; transition: var(--transition); text-align: center; 
-        }
-        .skill-card:hover { 
-            border-color: var(--primary); transform: translateY(-8px); 
-            box-shadow: 0 15px 30px -5px rgba(0,0,0,0.1); 
-        }
-        .skill-card svg { color: var(--primary); margin-bottom: 1rem; width: 36px; height: 36px; }
-        
-        .skills-detail-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 2rem; 
-        }
-        .skill-box { 
-            background: white; padding: 2rem; border-radius: 16px; 
-            border: 1px solid #f1f5f9; transition: var(--transition); 
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
-        }
-        .skill-box:hover { 
-            transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.08); 
-        }
-        .skill-box h4 { margin-bottom: 1.5rem; color: var(--primary); display: flex; align-items: center; gap: 0.5rem; }
-        
-        /* Tiến trình (Progress Bars) */
-        .skill-item { margin-bottom: 1.2rem; }
-        .skill-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.95rem; font-weight: 600; }
-        .skill-bar { width: 100%; height: 8px; background: var(--bg-light); border-radius: 4px; overflow: hidden; }
-        .skill-fill { height: 100%; background: linear-gradient(90deg, var(--primary), #60a5fa); border-radius: 4px; width: 0; transition: width 1.5s ease-out; }
-
-        /* Thẻ Công cụ (Tags) */
-        .tools-cloud { display: flex; flex-wrap: wrap; gap: 0.8rem; }
-        .tool-tag { 
-            background: var(--bg-light); color: var(--text-main); 
-            padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600; 
-            border: 1px solid #e2e8f0; transition: var(--transition); 
-            display: flex; align-items: center; gap: 0.4rem;
-        }
-        .tool-tag:hover { 
-            background: var(--primary-light); color: var(--primary); 
-            border-color: var(--primary); transform: translateY(-3px); 
-        }
-
-        /* PROJECTS SECTION */
-        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
-        .project-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; transition: var(--transition); display: flex; flex-direction: column; }
-        .project-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px -5px rgba(0,0,0,0.1); border-color: var(--primary-light); }
-        .project-img { height: 200px; background: #cbd5e1; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; overflow: hidden; position: relative; }
-        .project-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-        .project-card:hover .project-img img { transform: scale(1.05); }
-        .project-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
-        .project-content h4 { font-size: 1.2rem; margin-bottom: 0.5rem; }
-        .project-content p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.2rem; flex-grow: 1; }
-        .tech-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
-        .tech-tags span { background: var(--primary-light); color: var(--primary); padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
-        .project-actions { display: flex; gap: 0.8rem; border-top: 1px solid #f1f5f9; padding-top: 1.2rem; }
-
-        /* SOCIAL ACTIVITIES SECTION */
-        .activity-card {
-            display: flex;
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            border: 1px solid #f1f5f9;
-            margin-bottom: 2.5rem;
-            transition: var(--transition);
-        }
-        .activity-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -5px rgba(0,0,0,0.08); }
-        .activity-img {
-            width: 35%;
+        .activity-img { 
+            width: 45%; 
+            flex-shrink: 0; /* Khóa cứng khung, không cho bị ép nhỏ */
             position: relative;
-            min-height: 220px;
+            overflow: hidden;
         }
-        .activity-img img {
+        
+        .activity-img img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; /* Tự động cắt cúp cho vừa vặn, không bị méo ảnh */
             position: absolute;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            top: 0; 
+            left: 0;
+            transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-        .activity-content {
-            width: 65%;
-            padding: 2.5rem;
+
+        /* Thêm lại hiệu ứng Zoom ảnh xịn xò khi di chuột vào Card */
+        .activity-card:hover .activity-img img {
+            transform: scale(1.1);
+        }
+        
+        .activity-content { 
+            width: 55%; 
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: center; /* Căn giữa chữ theo chiều dọc cực kỳ đẹp mắt */
         }
-        .activity-content h4 { font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--text-main); }
-        .activity-meta { display: flex; align-items: center; gap: 0.5rem; color: var(--primary); font-size: 0.9rem; font-weight: 600; margin-bottom: 1rem; }
-        .activity-meta svg { width: 16px; height: 16px; }
-
-        /* ANIMATIONS CLASSES */
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
         
-        /* Hiệu ứng trễ cho các phần tử đứng cạnh nhau */
+        .activity-meta { 
+            display: flex; 
+            align-items: center; 
+            gap: 0.5rem; 
+            color: var(--primary); 
+            font-size: 0.9rem; 
+            font-weight: 600; 
+            margin-bottom: 1rem; 
+        }
+
+        /* ================= MODAL CHI TIẾT (POPUP) - BẢN NÂNG CẤP ================= */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            z-index: 2000; display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-overlay.show { opacity: 1; visibility: visible; }
+        
+        .modal-content {
+            background: #ffffff; width: 90%; max-width: 850px; max-height: 85vh; overflow-y: auto;
+            border-radius: 24px; padding: 3rem; position: relative;
+            transform: scale(0.95) translateY(30px); opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0,0,0,0.05);
+        }
+        .modal-overlay.show .modal-content { transform: scale(1) translateY(0); opacity: 1; }
+
+        .modal-content::-webkit-scrollbar { width: 8px; }
+        .modal-content::-webkit-scrollbar-track { background: transparent; }
+        .modal-content::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 10px; border: 2px solid #ffffff; }
+        .modal-content::-webkit-scrollbar-thumb:hover { background-color: #94a3b8; }
+
+        .close-modal {
+            position: absolute; top: 1.5rem; right: 1.5rem; cursor: pointer; /* Cho phép trỏ chuột trên desktop */
+            background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 50%;
+            width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+            color: var(--text-muted); transition: all 0.25s ease; z-index: 10;
+        }
+        .close-modal:hover { background: #fee2e2; color: #ef4444; border-color: #fca5a5; transform: rotate(90deg) scale(1.05); }
+        
+        #modal-body h3 { color: var(--text-main); font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem; line-height: 1.3; padding-right: 40px; }
+        #modal-body .modal-img { width: 100%; max-height: 450px; object-fit: cover; border-radius: 16px; margin-bottom: 2rem; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
+        #modal-body h4 { margin-top: 2rem; margin-bottom: 1rem; color: var(--primary); font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        #modal-body ul { list-style-type: none; padding-left: 0; margin-bottom: 1.5rem; }
+        #modal-body ul li { position: relative; padding-left: 1.5rem; margin-bottom: 0.75rem; color: var(--text-muted); line-height: 1.6; }
+        #modal-body ul li::before { content: "•"; position: absolute; left: 0; top: -2px; color: var(--primary); font-size: 1.5rem; font-weight: bold; }
+        #modal-body p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.25rem; }
+        #modal-body p strong { color: var(--text-main); font-weight: 700; }
+
+        /* ================= CONTACT SECTION VIP ================= */
+        .contact-box {
+            background: linear-gradient(135deg, var(--bg-white), var(--primary-light));
+            border-radius: 24px; padding: 4rem 2rem; text-align: center;
+            box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.15);
+            border: 1px solid rgba(255,255,255,0.8); max-width: 800px; margin: 0 auto;
+        }
+        .contact-box h2 { font-size: 2.5rem; color: var(--text-main); margin-bottom: 1rem; }
+        .contact-box p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+        /* ================= ANIMATIONS ================= */
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
         .delay-1 { transition-delay: 0.1s; }
         .delay-2 { transition-delay: 0.2s; }
         .delay-3 { transition-delay: 0.3s; }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
+        /* ================= FOOTER VIP ================= */
+        footer { padding: 4rem 10%; background: #0f172a; color: white; text-align: center; position: relative; overflow: hidden;}
+        footer::before { content:''; position: absolute; top:0; left:50%; transform: translateX(-50%); width: 80%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); }
+        .social-links { margin: 2rem 0; display: flex; justify-content: center; gap: 3rem; }
+        .social-links a { color: #cbd5e1; transition: var(--transition); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .social-links a svg { width: 36px; height: 36px; padding: 6px; border-radius: 12px; background: rgba(255,255,255,0.05); transition: var(--transition);}
+        .social-links a:hover svg { background: var(--primary); transform: translateY(-5px); color: white;}
+        .social-links a span { font-size: 0.8rem; font-weight: 600; opacity: 0.7; }
 
-        /* FOOTER */
-        footer { padding: 4rem 10%; background: #1e293b; color: white; text-align: center; }
-        .social-links { margin: 1.5rem 0; display: flex; justify-content: center; gap: 2.5rem; }
-        .social-links a { 
-            color: #cbd5e1; 
-            transition: var(--transition); 
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center;
-        }
-        .social-links a svg { width: 32px; height: 32px; } /* Phóng to icon ở footer */
-        .social-links a:hover { color: #60a5fa; transform: translateY(-5px) scale(1.1); }
-
-        /* RESPONSIVE */
+        /* ================= RESPONSIVE & MOBILE MENU ================= */
         @media (max-width: 992px) {
-            .about-grid, .skills-wrapper { grid-template-columns: 1fr; }
-            .about-img-container { max-width: 400px; margin: 0 auto; }
+            .about-grid { grid-template-columns: 1fr; }
+            .activity-card { flex-direction: column; }
+            .activity-img, .activity-content { width: 100%; }
+            .activity-img { height: 250px; }
         }
         @media (max-width: 768px) {
-            .hero-content h1 { font-size: 2.5rem; }
-            nav .nav-links { display: none; }
+            .hero-content h1 { font-size: 2.8rem; }
             section { padding: 60px 5%; }
-            .activity-card { flex-direction: column; }
-            .activity-img { width: 100%; height: 250px; }
-            .activity-content { width: 100%; padding: 1.5rem; }
+            .btn-group { flex-direction: column; }
+            
+            /* Mobile Menu */
+            .hamburger { display: block; }
+            .nav-links {
+                position: fixed; top: 0; right: -100%; height: 100vh; width: 70%;
+                background: var(--bg-white); flex-direction: column; align-items: center;
+                justify-content: center; transition: right 0.4s ease;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.1); z-index: 1000;
+            }
+            .nav-links.active { right: 0; }
+            .nav-links li { margin: 1.5rem 0; }
+            .nav-links a { font-size: 1.2rem; }
+            
+            .contact-box { padding: 3rem 1.5rem; }
+            .contact-box h2 { font-size: 2rem; }
         }
-
-        /* ================= MODAL CHI TIẾT (POPUP) ================= */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.6); /* Giảm độ tối một chút để nền phía sau trông tự nhiên hơn */
-            backdrop-filter: blur(8px); /* Tăng độ mờ (blur) để tập trung hoàn toàn vào modal */
-            -webkit-backdrop-filter: blur(8px);
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Chuyển động nảy nhẹ, mượt mà hơn */
-        }
-
-        .modal-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background: #ffffff;
-            width: 90%;
-            max-width: 850px; /* Tăng chiều rộng một chút cho không gian thoải mái */
-            max-height: 85vh;
-            overflow-y: auto;
-            border-radius: 24px; /* Bo góc tròn hơn mang lại cảm giác hiện đại (Mobile-friendly) */
-            padding: 3rem; /* Tăng padding để nội dung không bị ép vào viền */
-            position: relative;
-            transform: scale(0.95) translateY(30px);
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3), 
-                        0 0 0 1px rgba(0,0,0,0.05); /* Thêm một lớp viền bóng mờ (subtle border) */
-        }
-
-        .modal-overlay.show .modal-content {
-            transform: scale(1) translateY(0);
-            opacity: 1;
-        }
-
-        /* Tùy chỉnh thanh cuộn (Scrollbar) cho Modal */
-        .modal-content::-webkit-scrollbar {
-            width: 8px;
-        }
-        .modal-content::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .modal-content::-webkit-scrollbar-thumb {
-            background-color: #cbd5e1;
-            border-radius: 10px;
-            border: 2px solid #ffffff; /* Viền trắng để thanh cuộn nhìn thanh mảnh hơn */
-        }
-        .modal-content::-webkit-scrollbar-thumb:hover {
-            background-color: #94a3b8;
-        }
-
-        /* Nút đóng Modal */
-        .close-modal {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            cursor: pointer;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0; /* Thêm viền mỏng để nút nổi khối */
-            border-radius: 50%;
-            width: 44px; height: 44px; /* Tăng kích thước nút để dễ bấm trên Mobile */
-            display: flex; align-items: center; justify-content: center;
-            color: var(--text-muted);
-            transition: all 0.25s ease;
-            z-index: 10; /* Đảm bảo nút luôn nằm trên hình ảnh */
-        }
-        
-        .close-modal:hover {
-            background: #fee2e2;
-            color: #ef4444;
-            border-color: #fca5a5;
-            transform: rotate(90deg) scale(1.05); /* Thêm hiệu ứng phóng to nhẹ khi hover */
-        }
-
-        /* Định dạng nội dung bên trong Modal */
-        #modal-body h3 { 
-            color: var(--text-main); /* Chuyển tiêu đề chính sang màu đen/đậm để sang trọng hơn */
-            font-size: 2rem; 
-            font-weight: 800;
-            margin-bottom: 1.5rem; 
-            line-height: 1.3;
-            padding-right: 40px; /* Tránh chữ đè vào nút Close */
-        }
-        
-        #modal-body .modal-img { 
-            width: 100%; 
-            max-height: 450px; 
-            object-fit: cover; 
-            border-radius: 16px; 
-            margin-bottom: 2rem; 
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); /* Hình ảnh có bóng đổ để nổi bật */
-        }
-        
-        #modal-body h4 { 
-            margin-top: 2rem; 
-            margin-bottom: 1rem; 
-            color: var(--primary); /* Dùng màu Primary cho các mục con */
-            font-size: 1.25rem;
-            font-weight: 700;
-            display: flex; 
-            align-items: center; 
-            gap: 10px;
-        }
-        
-        #modal-body ul { 
-            list-style-type: none; /* Bỏ dấu chấm mặc định */
-            padding-left: 0; 
-            margin-bottom: 1.5rem; 
-        }
-        
-        #modal-body ul li {
-            position: relative;
-            padding-left: 1.5rem;
-            margin-bottom: 0.75rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-        
-        /* Tạo dấu chấm list custom đẹp hơn */
-        #modal-body ul li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            top: -2px;
-            color: var(--primary); /* Dấu chấm màu Primary */
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        #modal-body p { 
-            color: var(--text-muted); 
-            font-size: 1.05rem;
-            line-height: 1.7; /* Tăng khoảng cách dòng để dễ đọc */
-            margin-bottom: 1.25rem; 
-        }
-        
-        #modal-body p strong {
-            color: var(--text-main);
-            font-weight: 700;
-        }
-        
-        /* Chỉnh lại nút detail cho đồng bộ */
-        button.btn-small { cursor: pointer; background: white; display: inline-flex; align-items: center; font-family: inherit; }
     </style>
 </head>
 <body>
 
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
     <nav id="navbar">
         <div class="logo">NGOC<span>.DEV</span></div>
         <ul class="nav-links">
-            <li><a href="#home">Trang chủ</a></li>
-            <li><a href="#about">Giới thiệu</a></li>
-            <li><a href="#skills">Kỹ năng</a></li>
-            <li><a href="#projects">Dự án</a></li>
-            <li><a href="#activities">Hoạt động</a></li>
-            <li><a href="#contact">Liên hệ</a></li>
+            <li><a href="#home" class="hover-target">Trang chủ</a></li>
+            <li><a href="#about" class="hover-target">Giới thiệu</a></li>
+            <li><a href="#skills" class="hover-target">Kỹ năng</a></li>
+            <li><a href="#projects" class="hover-target">Dự án</a></li>
+            <li><a href="#activities" class="hover-target">Hoạt động</a></li>
         </ul>
-        <div class="mobile-menu-btn" style="display: none;"><i data-lucide="menu"></i></div>
+        <div class="hamburger hover-target" id="hamburger">
+            <i data-lucide="menu"></i>
+        </div>
     </nav>
 
     <section id="home" class="hero">
         <div class="hero-content">
-            <p class="intro reveal">👋 Xin chào, chào mừng bạn đến với không gian của</p>
+            <p class="intro reveal">👋 Xin chào, không gian sáng tạo của</p>
             <h1 class="reveal delay-1">Mình là <span class="highlight">Đặng Thọ Ngọc</span></h1>
-            <p class="hero-desc reveal delay-2">Sinh viên năm 3 CNTT với định hướng trở thành Software Engineer. Mình đam mê xây dựng các ứng dụng đa nền tảng (Mobile/Web), tối ưu hóa hệ thống mạng và luôn tự hào với vai trò Team Leader trong các dự án thực tế.</p>
+            <p class="hero-desc reveal delay-2">Sinh viên năm 3 CNTT đam mê phát triển phần mềm và tối ưu hóa hệ thống. Mình chuyên xây dựng ứng dụng đa nền tảng, thiết kế giao diện thông minh và dẫn dắt team hoàn thành mục tiêu chung.</p>
             <div class="btn-group reveal delay-3">
-                <a href="#projects" class="btn btn-primary">Xem dự án</a>
-                <a href="./path-to-your-CV.pdf" download class="btn btn-outline">
+                <a href="#projects" class="btn btn-primary hover-target">Khám phá dự án</a>
+                <a href="./DANG_THO_NGOC_CV_COVER_LETTER.pdf" download class="btn btn-outline hover-target">
                     <i data-lucide="download"></i> Tải CV (PDF)
                 </a>
             </div>
@@ -439,35 +393,57 @@
         </div>
         <div class="about-grid">
             <div class="about-img-container reveal">
-                <img src="https://images.unsplash.com/photo-1537511446984-935f663eb1f4?q=80&w=800&auto=format&fit=crop" alt="Đặng Thọ Ngọc Portrait">
+                <img src="https://images.unsplash.com/photo-1537511446984-935f663eb1f4?q=80&w=800&auto=format&fit=crop" alt="Đặng Thọ Ngọc">
             </div>
             <div class="about-text reveal delay-1">
                 <h3>Kỹ sư tương lai từ Nghệ An</h3>
-                <p>Mình là sinh viên năm 3 chuyên ngành CNTT với định hướng trở thành một Software Engineer chuyên nghiệp. Với tinh thần của một Team Leader, mình luôn đề cao tính chính xác, tư duy logic và khả năng gắn kết các thành viên trong nhóm.</p>
-                <p>Ngoài lập trình, mình rất thích nấu ăn và trải nghiệm các công cụ tạo ảnh AI. Sự tỉ mỉ trong từng công thức ẩm thực hay cách tối ưu prompt để ra một bức ảnh AI ưng ý cũng chính là tinh thần kiên nhẫn mà mình áp dụng khi thiết kế kiến trúc phần mềm và fix bug mỗi ngày.</p>
+                <p>Mục tiêu của mình là trở thành một Software Engineer toàn diện. Sự cẩn thận, tư duy logic và khả năng làm việc nhóm là những kim chỉ nam giúp mình vượt qua các dự án khó.</p>
+                <p>Ngoài thời gian code, mình thư giãn bằng việc nấu ăn và khám phá nghệ thuật AI. Sự tỉ mỉ trong bếp cũng giống hệt như cách mình gỡ lỗi (debug) một đoạn code: cần sự kiên nhẫn và chính xác tuyệt đối.</p>
                 
                 <div class="personal-details">
-                    <div class="detail-item"><strong>Họ tên</strong> Đặng Thọ Ngọc</div>
-                    <div class="detail-item"><strong>Học vấn</strong> GPA 2.95 </div>
-                    <div class="detail-item"><strong>Ngoại ngữ</strong> Tiếng Anh B1 (Target)</div>
-                    <div class="detail-item"><strong>Vị trí</strong> Leader / Developer</div>
+                    <div class="detail-item"><strong>Họ và tên</strong> <span>Đặng Thọ Ngọc</span></div>
+                    <div class="detail-item"><strong>Học vấn</strong> <span>111 Tín chỉ (GPA 2.90)</span></div>
+                    <div class="detail-item"><strong>Ngoại ngữ</strong> <span>Tiếng Anh B1</span></div>
+                    <div class="detail-item"><strong>Vai trò</strong> <span>Leader / Developer</span></div>
                 </div>
 
-                <div class="timeline-container reveal delay-2">
-                    <h4>Hành trình & Cột mốc</h4>
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-date">Hiện tại</div>
-                            <div class="timeline-content">
-                                <h5>Phát triển các dự án thực tế</h5>
-                                <p>Tập trung xây dựng ứng dụng Flutter, quản trị mạng và nghiên cứu thuật toán Game.</p>
+                <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed rgba(79, 70, 229, 0.3);">
+                    <strong style="color: var(--primary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 1rem;">
+                        <i data-lucide="award" style="width: 18px; height: 18px; display: inline-block; vertical-align: text-bottom; margin-right: 4px;"></i> 
+                        Nền Tảng Học Thuật & Năng Lực Cốt Lõi
+                    </strong>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="display: flex; align-items: flex-start; gap: 15px; flex-wrap: wrap;">
+                            <div style="min-width: 110px; font-size: 0.85rem; font-weight: 700; color: var(--text-main); margin-top: 5px;">
+                                Dev & AI
+                            </div>
+                            <div class="tech-tags" style="margin-bottom: 0; flex: 1;">
+                                <span style="background: white; border-color: rgba(79, 70, 229, 0.2);">Lập trình Python <strong style="color: var(--primary); margin-left: 4px;">A</strong></span>
+                                <span style="background: white; border-color: rgba(79, 70, 229, 0.2);">Trí tuệ nhân tạo <strong style="color: var(--primary); margin-left: 4px;">A</strong></span>
+                                <span style="background: white;">Hướng đối tượng (OOP) <strong style="color: var(--secondary); margin-left: 4px;">B</strong></span>
                             </div>
                         </div>
-                        <div class="timeline-item">
-                            <div class="timeline-date">Tháng 12, 2025</div>
-                            <div class="timeline-content">
-                                <h5>Hoàn thành 111 Tín chỉ</h5>
-                                <p>Đạt GPA 2.95. Đi sâu vào Computer Vision và hệ điều hành Linux (CentOS).</p>
+
+                        <div style="display: flex; align-items: flex-start; gap: 15px; flex-wrap: wrap;">
+                            <div style="min-width: 110px; font-size: 0.85rem; font-weight: 700; color: var(--text-main); margin-top: 5px;">
+                                System & QA
+                            </div>
+                            <div class="tech-tags" style="margin-bottom: 0; flex: 1;">
+                                <span style="background: white; border-color: rgba(79, 70, 229, 0.2);">Quản trị mạng <strong style="color: var(--primary); margin-left: 4px;">A</strong></span>
+                                <span style="background: white; border-color: rgba(79, 70, 229, 0.2);">Kiểm thử phần mềm <strong style="color: var(--primary); margin-left: 4px;">A</strong></span>
+                                <span style="background: white;">Cơ sở dữ liệu <strong style="color: var(--secondary); margin-left: 4px;">B</strong></span>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: flex-start; gap: 15px; flex-wrap: wrap;">
+                            <div style="min-width: 110px; font-size: 0.85rem; font-weight: 700; color: var(--text-main); margin-top: 5px;">
+                                Soft Skills
+                            </div>
+                            <div class="tech-tags" style="margin-bottom: 0; flex: 1;">
+                                <span style="background: white; border-color: rgba(79, 70, 229, 0.2);">Giao tiếp & Thuyết trình <strong style="color: var(--primary); margin-left: 4px;">A</strong></span>
+                                <span style="background: white;">Tư duy Thiết kế <strong style="color: var(--secondary); margin-left: 4px;">B</strong></span>
+                                <span style="background: white;">PP Nghiên cứu KH <strong style="color: var(--secondary); margin-left: 4px;">B</strong></span>
                             </div>
                         </div>
                     </div>
@@ -476,172 +452,82 @@
         </div>
     </section>
 
-    <section id="skills" style="background: var(--bg-light);">
+    <section id="skills">
         <div class="section-header reveal">
             <h2>Kỹ Năng & Công Nghệ</h2>
             <div class="underline"></div>
-            <p style="margin-top: 1rem; color: var(--text-muted);">Sự kết hợp giữa tư duy hệ thống, khả năng xây dựng sản phẩm và kỹ năng làm việc nhóm.</p>
+            <p style="margin-top: 1rem; color: var(--text-muted);">Kho vũ khí giúp mình biến ý tưởng thành hiện thực.</p>
         </div>
         
-        <div class="expertise-grid">
-            <div class="skill-card reveal">
-                <i data-lucide="globe"></i>
-                <h4>Web Development</h4>
-                <p>Xây dựng hệ thống website thương mại điện tử, thư viện điện tử với trải nghiệm người dùng tối ưu.</p>
-            </div>
-            <div class="skill-card reveal delay-1">
-                <i data-lucide="smartphone"></i>
-                <h4>Mobile Dev</h4>
-                <p>Phát triển đa nền tảng với Flutter. Tối ưu UI/UX, xử lý state và tương tác dữ liệu mượt mà.</p>
-            </div>
-            <div class="skill-card reveal delay-2">
-                <i data-lucide="shield-check"></i>
-                <h4>Network Admin</h4>
-                <p>Có kiến thức nền tảng về cấu hình FreeRADIUS, quản trị máy chủ Linux (CentOS).</p>
-            </div>
-            <div class="skill-card reveal delay-3">
-                <i data-lucide="scan-eye"></i>
-                <h4>Computer Vision</h4>
-                <p>Tiếp cận và ứng dụng cơ bản các thuật toán xử lý ảnh với OpenCV (SIFT, HOG).</p>
-            </div>
-        </div>
-
-        <div class="skills-detail-grid">
-            
-            <div class="skill-box reveal delay-1">
-                <h4><i data-lucide="code-2"></i> Ngôn Ngữ Lập Trình</h4>
-                
-                <h5 style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; border-bottom: 1px dashed #e2e8f0; padding-bottom: 0.5rem;">Frontend</h5>
-                <div class="skill-item">
-                    <div class="skill-header"><span>JavaScript / HTML / CSS</span> <span>Khá Tốt</span></div>
-                    <div class="skill-bar"><div class="skill-fill" data-width="85%"></div></div>
-                </div>
-                <div class="skill-item" style="margin-bottom: 1.5rem;">
-                    <div class="skill-header"><span>Dart (Flutter)</span> <span>Khá Tốt</span></div>
-                    <div class="skill-bar"><div class="skill-fill" data-width="80%"></div></div>
-                </div>
-
-                <h5 style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; border-bottom: 1px dashed #e2e8f0; padding-bottom: 0.5rem;">Backend & Database</h5>
-                <div class="skill-item">
-                    <div class="skill-header"><span>Python</span> <span>Khá</span></div>
-                    <div class="skill-bar"><div class="skill-fill" data-width="75%"></div></div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-header"><span>Java</span> <span>Khá</span></div>
-                    <div class="skill-bar"><div class="skill-fill" data-width="70%"></div></div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-header"><span>SQL (MySQL / PostgreSQL)</span> <span>Khá</span></div>
-                    <div class="skill-bar"><div class="skill-fill" data-width="70%"></div></div>
+        <div class="skills-ribbons-wrapper reveal delay-1">
+            <div class="marquee-container">
+                <div class="marquee-content">
+                    <div class="skill-badge"><i data-lucide="file-code-2"></i><span class="name">JavaScript / HTML / CSS</span><span class="level">Khá Tốt</span></div>
+                    <div class="skill-badge"><i data-lucide="smartphone"></i><span class="name">Dart (Flutter)</span><span class="level">Khá Tốt</span></div>
+                    <div class="skill-badge"><i data-lucide="terminal-square"></i><span class="name">Python</span><span class="level">Khá</span></div>
+                    <div class="skill-badge"><i data-lucide="coffee"></i><span class="name">Java</span><span class="level">Khá</span></div>
+                    <div class="skill-badge"><i data-lucide="database"></i><span class="name">SQL</span><span class="level">Khá</span></div>
+                    <div class="skill-badge"><i data-lucide="file-code-2"></i><span class="name">JavaScript / HTML / CSS</span><span class="level">Khá Tốt</span></div>
+                    <div class="skill-badge"><i data-lucide="smartphone"></i><span class="name">Dart (Flutter)</span><span class="level">Khá Tốt</span></div>
+                    <div class="skill-badge"><i data-lucide="terminal-square"></i><span class="name">Python</span><span class="level">Khá</span></div>
+                    <div class="skill-badge"><i data-lucide="coffee"></i><span class="name">Java</span><span class="level">Khá</span></div>
+                    <div class="skill-badge"><i data-lucide="database"></i><span class="name">SQL</span><span class="level">Khá</span></div>
                 </div>
             </div>
 
-            <div class="skill-box reveal delay-2">
-                <h4><i data-lucide="layers"></i> Framework & Công Cụ</h4>
-                
-                <h5 style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; border-bottom: 1px dashed #e2e8f0; padding-bottom: 0.5rem;">Frameworks / Libraries</h5>
-                <div class="tools-cloud" style="margin-bottom: 1.5rem;">
-                    <div class="tool-tag">Flutter</div>
-                    <div class="tool-tag">Node.js / Express</div>
-                    <div class="tool-tag">Django</div>
-                    <div class="tool-tag">Spring Boot</div>
-                    <div class="tool-tag">Bootstrap / Tailwind CSS</div>
-                </div>
-
-                <h5 style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; border-bottom: 1px dashed #e2e8f0; padding-bottom: 0.5rem;">Công cụ & Nền tảng</h5>
-                <div class="tools-cloud">
-                    <div class="tool-tag">Git / GitHub</div>
-                    <div class="tool-tag">VS Code</div>
-                    <div class="tool-tag">Postman</div>
-                    <div class="tool-tag">Android Studio</div>
-                    <div class="tool-tag">Linux (CentOS)</div>
+            <div class="marquee-container">
+                <div class="marquee-content reverse">
+                    <div class="skill-badge"><i data-lucide="layers"></i><span class="name">Flutter Framework</span><span class="level">Khá Tốt</span></div>
+                    <div class="skill-badge"><i data-lucide="git-branch"></i><span class="name">Git / GitHub</span><span class="level">Khá Tốt</span></div>
+                    <div class="skill-badge"><i data-lucide="monitor"></i><span class="name">Node.js / Django</span><span class="level">Khá</span></div>
+                    <div class="skill-badge"><i data-lucide="server"></i><span class="name">Linux / CentOS</span><span class="level">Cơ bản</span></div>
+                    <div class="skill-badge"><i data-lucide="scan-eye"></i><span class="name">OpenCV</span><span class="level">Cơ bản</span></div>
+                    <div class="skill-badge"><i data-lucide="settings"></i><span class="name">Postman & APIs</span><span class="level">Khá</span></div>
+                    <div class="skill-badge"><i data-lucide="layers"></i><span class="name">Flutter Framework</span><span class="level">Khá Tốt</span></div>
+                    <div class="skill-badge"><i data-lucide="git-branch"></i><span class="name">Git / GitHub</span><span class="level">Khá Tốt</span></div>
+                    <div class="skill-badge"><i data-lucide="monitor"></i><span class="name">Node.js / Django</span><span class="level">Khá</span></div>
+                    <div class="skill-badge"><i data-lucide="server"></i><span class="name">Linux / CentOS</span><span class="level">Cơ bản</span></div>
+                    <div class="skill-badge"><i data-lucide="scan-eye"></i><span class="name">OpenCV</span><span class="level">Cơ bản</span></div>
+                    <div class="skill-badge"><i data-lucide="settings"></i><span class="name">Postman & APIs</span><span class="level">Khá</span></div>
                 </div>
             </div>
 
-            <div class="skill-box reveal delay-3">
-                <h4><i data-lucide="users"></i> Kỹ Năng Mềm</h4>
-                <div class="skill-item">
-                    <div class="skill-header"><span>Team Leadership</span> <span>Tốt</span></div>
-                    <div class="skill-bar"><div class="skill-fill" data-width="90%"></div></div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-header"><span>Giao tiếp & Trình bày</span> <span>Tốt</span></div>
-                    <div class="skill-bar"><div class="skill-fill" data-width="85%"></div></div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-header"><span>Làm việc nhóm (Teamwork)</span> <span>Khá Tốt</span></div>
-                    <div class="skill-bar"><div class="skill-fill" data-width="85%"></div></div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-header"><span>Tư duy Logic & Giải quyết vđ</span> <span>Khá Tốt</span></div>
-                    <div class="skill-bar"><div class="skill-fill" data-width="80%"></div></div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-header"><span>Tự học & Nghiên cứu</span> <span>Khá</span></div>
-                    <div class="skill-bar"><div class="skill-fill" data-width="75%"></div></div>
+            <div class="marquee-container">
+                <div class="marquee-content">
+                    <div class="skill-badge"><i data-lucide="users"></i><span class="name">Team Leadership</span><span class="level">Tốt</span></div>
+                    <div class="skill-badge"><i data-lucide="message-square"></i><span class="name">Giao tiếp</span><span class="level">Tốt</span></div>
+                    <div class="skill-badge"><i data-lucide="brain-circuit"></i><span class="name">Tư duy Logic</span><span class="level">Khá Tốt</span></div>
+                    <div class="skill-badge"><i data-lucide="handshake"></i><span class="name">Teamwork</span><span class="level">Khá Tốt</span></div>
+                    <div class="skill-badge"><i data-lucide="book-open"></i><span class="name">Tự học</span><span class="level">Khá</span></div>
+                    <div class="skill-badge"><i data-lucide="users"></i><span class="name">Team Leadership</span><span class="level">Tốt</span></div>
+                    <div class="skill-badge"><i data-lucide="message-square"></i><span class="name">Giao tiếp</span><span class="level">Tốt</span></div>
+                    <div class="skill-badge"><i data-lucide="brain-circuit"></i><span class="name">Tư duy Logic</span><span class="level">Khá Tốt</span></div>
+                    <div class="skill-badge"><i data-lucide="handshake"></i><span class="name">Teamwork</span><span class="level">Khá Tốt</span></div>
+                    <div class="skill-badge"><i data-lucide="book-open"></i><span class="name">Tự học</span><span class="level">Khá</span></div>
                 </div>
             </div>
-
         </div>
     </section>
 
-    <section id="projects">
+    <section id="projects" style="background: var(--bg-white);">
         <div class="section-header reveal">
             <h2>Dự Án Tiêu Biểu</h2>
             <div class="underline"></div>
         </div>
         <div class="project-grid">
             
-            <div class="project-card reveal">
-                <div class="project-img">
-                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop" alt="Server CentOS">
-                </div>
-                <div class="project-content">
-                    <h4>Centralized Auth System</h4>
-                    <p>Đảm nhiệm vai trò Leader. Trực tiếp điều phối tiến độ, phân chia task cho 3 thành viên và triển khai thành công hệ thống xác thực tập trung trên môi trường CentOS.</p>
-                    <div class="tech-tags">
-                        <span>Linux</span> <span>RADIUS</span> <span>Network</span>
-                    </div>
-                    <div class="project-actions">
-                        <button class="btn-small" onclick="openModal('proj-1-detail')"><i data-lucide="eye"></i> Chi tiết</button>
-                        <a href="#" class="btn-small"><i data-lucide="github"></i> Code</a>
-                        <a href="#" class="btn-small"><i data-lucide="external-link"></i> Báo cáo</a>
-                    </div>
-                </div>
-
-                <div id="proj-1-detail" style="display: none;">
-                    <h3>Centralized Authentication System (FreeRADIUS)</h3>
-                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1200&auto=format&fit=crop" class="modal-img">
-                    <p><strong>Mô tả tổng quan:</strong> Dự án yêu cầu thiết lập một máy chủ quản lý xác thực tập trung (AAA) bảo mật cho mạng nội bộ, sử dụng FreeRADIUS trên hệ điều hành Linux CentOS.</p>
-                    <h4><i data-lucide="target"></i> Vai trò & Nhiệm vụ (Leader)</h4>
-                    <ul>
-                        <li>Lên kế hoạch, thiết kế kiến trúc mạng và phân chia tiến độ cho các thành viên.</li>
-                        <li>Trực tiếp cài đặt và cấu hình Core FreeRADIUS service trên CentOS.</li>
-                        <li>Thiết lập kết nối an toàn giữa các thiết bị mạng và Radius Server.</li>
-                        <li>Kiểm tra, fix bug lỗi xác thực và viết tài liệu báo cáo nghiệm thu.</li>
-                    </ul>
-                    <h4><i data-lucide="zap"></i> Kết quả</h4>
-                    <p>Hệ thống hoạt động ổn định, chứng minh được khả năng ngăn chặn truy cập trái phép và quản lý log người dùng một cách chặt chẽ.</p>
-                </div>
-            </div>
-
-            <div class="project-card reveal delay-1">
-                <div class="project-img">
-                    <img src="https://images.unsplash.com/photo-1526498460520-4c246339dccb?q=80&w=800&auto=format&fit=crop" alt="English Puzzle Game Mobile App">
-                </div>
-                <div class="project-content">
+            <div class="vip-card reveal">
+                <div class="card-img"><img src="https://images.unsplash.com/photo-1526498460520-4c246339dccb?q=80&w=800&auto=format&fit=crop" alt="English Puzzle Game"></div>
+                <div class="card-content">
                     <h4>English Puzzle Game</h4>
-                    <p>Hệ sinh thái học từ vựng kết hợp Gamification. Nổi bật với cơ chế giải đố ma trận chữ, hệ thống ôn tập Spaced Repetition và công cụ CMS (Python/Flask) kiểm thử chất lượng dữ liệu tự động.</p>
-                    <div class="tech-tags">
-                        <span>Flutter</span> <span>Provider</span> <span>Python (Flask)</span> <span>Vanilla JS</span> <span>Gamification</span>
-                    </div>
-                    <div class="project-actions">
-                        <button class="btn-small" onclick="openModal('proj-2-detail')"><i data-lucide="eye"></i> Chi tiết</button>
-                        <a href="https://github.com/Ngocdt3102/english_puzzle_game.git" target="_blank" class="btn-small"><i data-lucide="github"></i> App Repo</a>
+                    <p>Hệ sinh thái học từ vựng kết hợp Gamification. Nổi bật với cơ chế giải đố ma trận chữ, hệ thống ôn tập Spaced Repetition và công cụ CMS kiểm thử dữ liệu tự động.</p>
+                    <div class="tech-tags"><span>Flutter</span> <span>Provider</span> <span>Python (Flask)</span> <span>Vanilla JS</span> <span>Gamification</span></div>
+                    <div class="card-actions">
+                        <button class="btn-small hover-target" onclick="openModal('proj-1-detail')"><i data-lucide="eye"></i> Chi tiết</button>
+                        <a href="https://github.com/Ngocdt3102/english_puzzle_game.git" target="_blank" class="btn-small hover-target"><i data-lucide="github"></i> Repo</a>
                     </div>
                 </div>
-
-                <div id="proj-2-detail" style="display: none;">
+                <div id="proj-1-detail" style="display: none;">
                     <h3>English Puzzle Game - Hệ Sinh Thái Học Tập Đa Nền Tảng</h3>
                     <img src="https://images.unsplash.com/photo-1526498460520-4c246339dccb?q=80&w=1200&auto=format&fit=crop" class="modal-img" alt="Project Showcase">
                     
@@ -649,78 +535,88 @@
                     
                     <h4><i data-lucide="code"></i> Điểm nhấn Công nghệ & Quá trình Phát triển</h4>
                     <ul>
-                        <li><strong>Kiến trúc & UX/UI (Flutter):</strong> 
-                            Quản lý luồng dữ liệu phức tạp mượt mà bằng <code>Provider</code>. Ứng dụng kỹ thuật thiết kế <em>"Chameleon Theme" (Tắc kè hoa)</em>, tự động tái cấu trúc toàn bộ mã màu, gradient và shadow theo chủ đề hệ thống mà không làm gián đoạn trải nghiệm.
-                        </li>
-                        <li><strong>Cơ chế Gamification & Spaced Repetition:</strong> 
-                            Xây dựng hệ thống kinh tế trong game (Vàng, Gợi ý, Chuỗi Journey). Tích hợp module luyện tập thông minh tự động mở khóa dựa trên tiến độ, hỗ trợ 3 phương pháp tiếp cận: Trắc nghiệm, Nghe (tích hợp Text-to-Speech) và Viết (kèm chuẩn phiên âm IPA).
-                        </li>
-                        <li><strong>Công cụ CMS & Data Pipeline (Python/Flask):</strong> 
-                            Không chỉnh sửa JSON thủ công, tôi tự xây dựng một <em>"Data Dashboard Pro Max"</em> trên nền tảng Web (Flask & Vanilla JS). Tool giúp trực quan hóa ma trận từ vựng, bắt lỗi logic mapping, và cung cấp môi trường rà soát ngữ nghĩa (QA) để xuất trực tiếp file Database chuẩn hóa.
-                        </li>
-                        <li><strong>Hiệu suất (Optimization):</strong> 
-                            Tối ưu thuật toán tìm kiếm và nội suy mảnh ghép (Sub-words to Main-word mapping) tức thì. Đảm bảo ứng dụng hoạt động 100% Offline với bộ Dataset khổng lồ mà không tiêu hao nhiều tài nguyên thiết bị.
-                        </li>
+                        <li><strong>Kiến trúc & UX/UI (Flutter):</strong> Quản lý luồng dữ liệu phức tạp mượt mà bằng <code>Provider</code>. Ứng dụng kỹ thuật thiết kế <em>"Chameleon Theme" (Tắc kè hoa)</em>, tự động tái cấu trúc toàn bộ mã màu, gradient và shadow theo chủ đề hệ thống.</li>
+                        <li><strong>Cơ chế Gamification & Spaced Repetition:</strong> Xây dựng hệ thống kinh tế trong game (Vàng, Gợi ý, Chuỗi Journey). Tích hợp module luyện tập thông minh tự động mở khóa dựa trên tiến độ, hỗ trợ 3 phương pháp tiếp cận: Trắc nghiệm, Nghe (tích hợp Text-to-Speech) và Viết.</li>
+                        <li><strong>Công cụ CMS & Data Pipeline (Python/Flask):</strong> Tự xây dựng một <em>"Data Dashboard Pro Max"</em> trên nền tảng Web. Tool giúp trực quan hóa ma trận từ vựng, bắt lỗi logic mapping, và cung cấp môi trường rà soát ngữ nghĩa (QA) để xuất trực tiếp file Database chuẩn hóa.</li>
+                        <li><strong>Hiệu suất (Optimization):</strong> Tối ưu thuật toán tìm kiếm và nội suy mảnh ghép. Đảm bảo ứng dụng hoạt động 100% Offline với bộ Dataset khổng lồ mà không tiêu hao nhiều tài nguyên thiết bị.</li>
                     </ul>
                 </div>
             </div>
 
-            <div class="project-card reveal delay-2">
-                <div class="project-img">
-                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop" alt="Web Code">
-                </div>
-                <div class="project-content">
-                    <h4>Women's Day Quiz Game</h4>
-                    <p>Website tương tác trực tiếp với người dùng dưới dạng Quiz Game được xây dựng đặc biệt cho dịp 8/3. Kết hợp UI/UX thân thiện và xử lý logic mượt mà.</p>
-                    <div class="tech-tags">
-                        <span>HTML/CSS</span> <span>JavaScript</span> <span>Web Design</span>
-                    </div>
-                    <div class="project-actions">
-                        <button class="btn-small" onclick="openModal('proj-3-detail')"><i data-lucide="eye"></i> Chi tiết</button>
-                        <a href="https://github.com/ngocprofile/Woman_day.git" target="_blank" class="btn-small"><i data-lucide="github"></i> Code</a>
-                        <a href="https://ngocprofile.github.io/Woman_day/" target="_blank" class="btn-small"><i data-lucide="play"></i> Demo</a>
-                    </div>
-                </div>
-
-                <div id="proj-3-detail" style="display: none;">
-                    <h3>Interactive Web: Women's Day Quiz Game</h3>
-                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop" class="modal-img">
-                    <p><strong>Mô tả tổng quan:</strong> Một dự án website frontend thú vị dành tặng phái nữ nhân ngày 8/3, được thiết kế dưới dạng một trò chơi giải đố (Quiz Game) mang tính tương tác cao.</p>
-                    <h4><i data-lucide="monitor-play"></i> Điểm nổi bật</h4>
-                    <ul>
-                        <li>Thiết kế giao diện (UI) hiện đại, phối màu bắt mắt và bố cục Responsive tương thích với cả điện thoại lẫn máy tính.</li>
-                        <li>Sử dụng Vanilla JavaScript để xử lý logic trò chơi: tính điểm, chuyển câu hỏi, và hiển thị kết quả chúc mừng hoàn toàn động (dynamic).</li>
-                        <li>Áp dụng các hiệu ứng CSS Animation giúp trải nghiệm người dùng (UX) trở nên sống động hơn.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="project-card reveal delay-3">
-                <div class="project-img">
-                    <img src="https://images.unsplash.com/photo-1592210454359-9043f067919b?q=80&w=800&auto=format&fit=crop" alt="Weather App">
-                </div>
-                <div class="project-content">
+            <div class="vip-card reveal delay-1">
+                <div class="card-img"><img src="https://images.unsplash.com/photo-1592210454359-9043f067919b?q=80&w=800&auto=format&fit=crop" alt="Weather App"></div>
+                <div class="card-content">
                     <h4>Smart Weather App</h4>
-                    <p>Ứng dụng tra cứu thời tiết theo giờ. Tích hợp API Geocoding để tìm kiếm địa danh và tính năng định vị GPS tự động. Giao diện tối ưu UI/UX.</p>
-                    <div class="tech-tags">
-                        <span>Vanilla JS</span> <span>RESTful API</span> <span>Geolocation</span>
-                    </div>
-                    <div class="project-actions">
-                        <button class="btn-small" onclick="openModal('proj-4-detail')"><i data-lucide="eye"></i> Chi tiết</button>
-                        <a href="https://github.com/Ngocdt3102/weather-chat-app.git" target="_blank" class="btn-small"><i data-lucide="github"></i> Code</a>
-                        <a href="#" target="_blank" class="btn-small"><i data-lucide="play"></i> Demo</a>
+                    <p>Ứng dụng tra cứu thời tiết linh hoạt theo giờ, tích hợp bản đồ Geocoding và API định vị GPS tự động tối ưu UX.</p>
+                    <div class="tech-tags"><span>Vanilla JS</span> <span>RESTful API</span> <span>Geolocation</span></div>
+                    <div class="card-actions">
+                        <button class="btn-small hover-target" onclick="openModal('proj-2-detail')"><i data-lucide="eye"></i> Chi tiết</button>
+                        <a href="https://github.com/Ngocdt3102/weather-chat-app.git" target="_blank" class="btn-small hover-target"><i data-lucide="github"></i> Code</a>
+                        <a href="#" target="_blank" class="btn-small hover-target"><i data-lucide="play"></i> Demo</a>
                     </div>
                 </div>
-
-                <div id="proj-4-detail" style="display: none;">
+                <div id="proj-2-detail" style="display: none;">
                     <h3>Smart Weather App (Dự Báo Thời Tiết)</h3>
                     <img src="https://images.unsplash.com/photo-1592210454359-9043f067919b?q=80&w=1200&auto=format&fit=crop" class="modal-img">
-                    <p><strong>Mô tả tổng quan:</strong> Một ứng dụng web cung cấp thông tin dự báo thời tiết theo giờ chi tiết, nhanh chóng và chính xác.</p>
-                    <h4><i data-lucide="cpu"></i> Kỹ thuật & Công nghệ xử lý</h4>
+                    <p><strong>Mô tả tổng quan:</strong> Một ứng dụng web cung cấp thông tin dự báo thời tiết theo giờ chi tiết, nhanh chóng và chính xác được viết hoàn toàn bằng HTML, CSS và JavaScript thuần.</p>
+                    <h4><i data-lucide="cpu"></i> Kỹ thuật xử lý & Nổi bật</h4>
                     <ul>
-                        <li><strong>API Integration:</strong> Kết hợp khéo léo 2 API. Sử dụng Nominatim OpenStreetMap API để chuyển đổi địa danh tiếng Việt thành tọa độ, sau đó gọi OpenWeatherMap API để lấy dữ liệu thời tiết dựa trên tọa độ đó.</li>
-                        <li><strong>Geolocation:</strong> Tích hợp API định vị toàn cầu của trình duyệt để tự động lấy vị trí hiện tại của người dùng chỉ với 1 click.</li>
-                        <li><strong>UX Optimization:</strong> Xử lý bất đồng bộ (Fetch/Promises) kết hợp với các hiệu ứng báo trạng thái Loading, báo lỗi rõ ràng khi không tìm thấy địa danh.</li>
+                        <li><strong>API Integration:</strong> Kết hợp khéo léo 2 API. Sử dụng Nominatim OpenStreetMap API để chuyển đổi địa danh tiếng Việt thành tọa độ, sau đó gọi OpenWeatherMap API để lấy dữ liệu thời tiết.</li>
+                        <li><strong>Geolocation:</strong> Tích hợp API định vị toàn cầu của trình duyệt để tự động lấy vị trí hiện tại của người dùng chỉ với 1 click chuột.</li>
+                        <li><strong>UX Optimization:</strong> Xử lý bất đồng bộ (Fetch/Promises) kết hợp với các hiệu ứng báo trạng thái Loading, báo lỗi rõ ràng khi không tìm thấy địa danh. Hỗ trợ tìm kiếm nhanh bằng phím Enter.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="vip-card reveal delay-2">
+                <div class="card-img"><img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop" alt="Server CentOS"></div>
+                <div class="card-content">
+                    <h4>Centralized Auth System</h4>
+                    <p>Triển khai hệ thống AAA tập trung, quản lý truy cập mạng an toàn bằng nền tảng FreeRADIUS trên máy chủ CentOS.</p>
+                    <div class="tech-tags"><span>Linux / CentOS</span> <span>RADIUS</span> <span>Network</span></div>
+                    <div class="card-actions">
+                        <button class="btn-small hover-target" onclick="openModal('proj-3-detail')"><i data-lucide="eye"></i> Chi tiết</button>
+                        <a href="#" class="btn-small hover-target"><i data-lucide="github"></i> Code</a>
+                        <a href="#" class="btn-small hover-target"><i data-lucide="external-link"></i> Báo cáo</a>
+                    </div>
+                </div>
+                <div id="proj-3-detail" style="display: none;">
+                    <h3>Centralized Authentication System (FreeRADIUS)</h3>
+                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1200&auto=format&fit=crop" class="modal-img">
+                    <p><strong>Mô tả tổng quan:</strong> Dự án yêu cầu thiết lập một máy chủ quản lý xác thực tập trung (AAA) bảo mật cho mạng nội bộ, sử dụng phần mềm nguồn mở FreeRADIUS trên nền hệ điều hành Linux CentOS.</p>
+                    <h4><i data-lucide="target"></i> Vai trò (Leader) & Nhiệm vụ</h4>
+                    <ul>
+                        <li>Lên kế hoạch, thiết kế kiến trúc mạng tổng thể và phân chia tiến độ công việc cho 3 thành viên khác trong nhóm.</li>
+                        <li>Trực tiếp cài đặt và cấu hình Core FreeRADIUS service, tạo lập user/group policy trên CentOS.</li>
+                        <li>Thiết lập kết nối an toàn giữa các thiết bị mạng (Switch/Access Point) và Radius Server.</li>
+                        <li>Kiểm tra, gỡ lỗi (troubleshoot) quá trình xác thực và tổng hợp tài liệu báo cáo nghiệm thu.</li>
+                    </ul>
+                    <h4><i data-lucide="zap"></i> Kết quả</h4>
+                    <p>Hệ thống hoạt động ổn định, chứng minh được khả năng ngăn chặn truy cập trái phép và quản lý nhật ký (log) người dùng một cách chặt chẽ.</p>
+                </div>
+            </div>
+            
+            <div class="vip-card reveal delay-3">
+                <div class="card-img"><img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop" alt="Web Code"></div>
+                <div class="card-content">
+                    <h4>Women's Day Quiz Game</h4>
+                    <p>Website tương tác trực tiếp với người dùng dưới dạng Quiz Game được thiết kế đặc biệt làm quà tặng dịp 8/3.</p>
+                    <div class="tech-tags"><span>HTML/CSS</span> <span>JavaScript</span> <span>Web Design</span></div>
+                    <div class="card-actions">
+                        <button class="btn-small hover-target" onclick="openModal('proj-4-detail')"><i data-lucide="eye"></i> Chi tiết</button>
+                        <a href="https://github.com/ngocprofile/Woman_day.git" target="_blank" class="btn-small hover-target"><i data-lucide="github"></i> Code</a>
+                        <a href="https://ngocprofile.github.io/Woman_day/" target="_blank" class="btn-small hover-target"><i data-lucide="play"></i> Demo</a>
+                    </div>
+                </div>
+                <div id="proj-4-detail" style="display: none;">
+                    <h3>Interactive Web: Women's Day Quiz Game</h3>
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop" class="modal-img">
+                    <p><strong>Mô tả tổng quan:</strong> Một dự án website frontend thú vị dành tặng phái nữ nhân ngày Quốc tế Phụ nữ 8/3, được thiết kế dưới dạng một trò chơi giải đố (Quiz Game) mang tính tương tác cao.</p>
+                    <h4><i data-lucide="monitor-play"></i> Điểm nổi bật</h4>
+                    <ul>
+                        <li>Thiết kế giao diện (UI) hiện đại, phối tông màu ấm áp phù hợp chủ đề và bố cục Responsive hoàn toàn tương thích với cả điện thoại lẫn máy tính.</li>
+                        <li>Sử dụng Vanilla JavaScript để thao tác với DOM: xử lý logic tính điểm, chuyển đổi câu hỏi mượt mà và hiển thị trang kết quả chúc mừng động (dynamic).</li>
+                        <li>Áp dụng các hiệu ứng CSS Animation/Transition giúp trải nghiệm người chơi (UX) trở nên sống động, không bị nhàm chán.</li>
                     </ul>
                 </div>
             </div>
@@ -728,101 +624,84 @@
         </div>
     </section>
 
-    <section id="activities" style="background: var(--bg-light);">
+    <section id="activities">
         <div class="section-header reveal">
             <h2>Hoạt Động Xã Hội</h2>
             <div class="underline"></div>
-            <p style="margin-top: 1rem; color: var(--text-muted);">Những trải nghiệm thực tế giúp mình rèn luyện kỹ năng mềm, tinh thần làm việc nhóm và trách nhiệm với cộng đồng.</p>
+            <p style="margin-top: 1rem; color: var(--text-muted);">Trải nghiệm thực tế giúp mình rèn luyện kỹ năng mềm và trách nhiệm với cộng đồng.</p>
         </div>
         
         <div class="activities-container">
-            <div class="activity-card reveal">
-                <div class="activity-img">
-                    <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=800&auto=format&fit=crop" alt="Tình nguyện viên vì cộng đồng">
+            <div class="vip-card activity-card reveal">
+                <div class="activity-img"><img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=800&auto=format&fit=crop" alt="Volunteer"></div>
+                <div class="card-content activity-content">
+                    <h4>Tình Nguyện Viên & Hiến Máu Nhân Đạo</h4>
+                    <div class="activity-meta"><i data-lucide="heart-handshake"></i> Đại học Đông Á & Đà Nẵng</div>
+                    <p>Đã hiến máu nhân đạo 5 lần và tham gia đội hình hỗ trợ đồng bào bão lụt, khắc phục hậu quả thiên tai tại địa phương.</p>
+                    <button class="btn-small hover-target" style="margin-top: 1rem; width: fit-content;" onclick="openModal('act-1-detail')"><i data-lucide="eye"></i> Hành trình</button>
                 </div>
-                <div class="activity-content">
-                    <h4>Tình Nguyện Viên Hỗ Trợ Cộng Đồng & Hiến Máu</h4>
-                    <div class="activity-meta">
-                        <i data-lucide="heart-handshake"></i> Đại học Đông Á & Khu vực Đà Nẵng
-                    </div>
-                    <p>Tích cực tham gia các hoạt động vì cộng đồng, bao gồm <strong>5 lần hiến máu nhân đạo</strong> do trường tổ chức và trực tiếp hỗ trợ khắc phục hậu quả bão lụt tại Đà Nẵng.</p>
-                    <button class="btn-small" style="margin-top: 1rem; width: fit-content;" onclick="openModal('act-1-detail')"><i data-lucide="eye"></i> Xem chi tiết</button>
-                </div>
-
                 <div id="act-1-detail" style="display: none;">
-                    <h3>Hành trình Tình nguyện & Trách nhiệm cộng đồng</h3>
+                    <h3>Tình Nguyện Viên vì Cộng Đồng</h3>
                     <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1200&auto=format&fit=crop" class="modal-img">
-                    <h4><i data-lucide="droplet"></i> Hiến máu nhân đạo</h4>
-                    <p>Mình đã tham gia 5 đợt hiến máu nhân đạo do Đại học Đông Á tổ chức. Đây là hoạt động mình luôn duy trì mỗi khi đủ điều kiện sức khỏe vì tin rằng sự đóng góp nhỏ bé của mình có thể cứu sống được nhiều người.</p>
+                    <h4><i data-lucide="droplet"></i> Hiến máu nhân đạo (5 lần)</h4>
+                    <p>Mình đã tham gia 5 đợt hiến máu nhân đạo do Đại học Đông Á tổ chức. Đây là hoạt động mình luôn duy trì mỗi khi đủ điều kiện sức khỏe vì tin rằng sự đóng góp nhỏ bé của mình có thể góp phần vào nguồn máu cứu người của TP. Đà Nẵng.</p>
                     <h4><i data-lucide="waves"></i> Cứu trợ lũ lụt Đà Nẵng</h4>
                     <ul>
-                        <li>Tham gia đội hình thanh niên phân loại, đóng gói nhu yếu phẩm khẩn cấp.</li>
-                        <li>Trực tiếp xuống các điểm ngập lụt tại Đà Nẵng sau khi nước rút để hỗ trợ bà con dọn dẹp bùn đất, vệ sinh môi trường, nhanh chóng ổn định lại cuộc sống.</li>
+                        <li>Tham gia đội hình thanh niên tình nguyện phân loại, sắp xếp và đóng gói hàng trăm suất nhu yếu phẩm khẩn cấp.</li>
+                        <li>Trực tiếp xuống các địa điểm ngập sâu tại Đà Nẵng sau khi nước rút để hỗ trợ bà con dọn dẹp bùn đất, khử trùng vệ sinh môi trường, giúp người dân nhanh chóng ổn định lại cuộc sống.</li>
                     </ul>
                 </div>
             </div>
 
-            <div class="activity-card reveal delay-1">
-                <div class="activity-img">
-                    <img src="https://images.unsplash.com/photo-1533174000273-1120b396adb1?q=80&w=800&auto=format&fit=crop" alt="Sự kiện văn hóa nghệ thuật">
-                </div>
-                <div class="activity-content">
+            <div class="vip-card activity-card reveal delay-1" style="margin-top: 3rem;">
+                <div class="activity-img"><img src="https://images.unsplash.com/photo-1533174000273-1120b396adb1?q=80&w=800&auto=format&fit=crop" alt="Flashmob"></div>
+                <div class="card-content activity-content">
                     <h4>Giải Ba Nhảy Flashmob - Lễ Hội Việt Nhật</h4>
-                    <div class="activity-meta">
-                        <i data-lucide="award"></i> Tháng 3/2024 | Lớp IT23B
-                    </div>
-                    <p>Cùng tập thể lớp IT23B lên ý tưởng, nỗ lực luyện tập và xuất sắc đạt Giải 3 tại cuộc thi nhảy Flashmob. Hoạt động rèn luyện sự tự tin và khả năng phối hợp nhóm.</p>
-                    <button class="btn-small" style="margin-top: 1rem; width: fit-content;" onclick="openModal('act-2-detail')"><i data-lucide="eye"></i> Xem chi tiết</button>
+                    <div class="activity-meta"><i data-lucide="award"></i> Tháng 3/2024 | Lớp IT23B</div>
+                    <p>Xuất sắc đạt Giải Ba. Thoát khỏi vùng an toàn của dân IT để rèn luyện sự tự tin, năng lượng và tinh thần đồng đội.</p>
+                    <button class="btn-small hover-target" style="margin-top: 1rem; width: fit-content;" onclick="openModal('act-2-detail')"><i data-lucide="eye"></i> Chi tiết</button>
                 </div>
-
                 <div id="act-2-detail" style="display: none;">
-                    <h3>Cuộc Thi Nhảy Flashmob - Lễ Hội Việt Nhật</h3>
+                    <h3>Cuộc Thi Nhảy Flashmob - Lễ Hội Văn Hóa Việt Nhật</h3>
                     <img src="https://images.unsplash.com/photo-1533174000273-1120b396adb1?q=80&w=1200&auto=format&fit=crop" class="modal-img">
-                    <p><strong>Hoàn cảnh:</strong> Hưởng ứng phong trào Lễ hội giao lưu văn hóa Việt - Nhật diễn ra vào tháng 3/2024, mình cùng các bạn lớp IT23B đã quyết định đăng ký tham gia hạng mục nhảy Flashmob.</p>
+                    <p><strong>Hoàn cảnh:</strong> Hưởng ứng phong trào Lễ hội giao lưu văn hóa Việt - Nhật diễn ra vào tháng 3/2024, mình cùng các bạn tập thể lớp IT23B đã quyết định đăng ký tham gia hạng mục nhảy Flashmob.</p>
                     <h4><i data-lucide="star"></i> Giá trị đạt được</h4>
                     <ul>
-                        <li><strong>Phá vỡ vùng an toàn:</strong> Là dân IT vốn quen với máy tính, việc học nhảy và biểu diễn trước đám đông là một thử thách lớn, giúp mình tự tin và năng động hơn rất nhiều.</li>
-                        <li><strong>Kỹ năng làm việc nhóm:</strong> Quá trình từ khâu chọn nhạc, thống nhất động tác đến sắp xếp thời gian tập luyện ngoài giờ học đòi hỏi sự thấu hiểu, kiên nhẫn và tinh thần đoàn kết cao độ của cả tập thể. Cúp Giải 3 là minh chứng cho sự nỗ lực chung đó.</li>
+                        <li><strong>Teamwork & Kỷ luật:</strong> Quá trình từ khâu chọn nhạc, thống nhất động tác đến việc sắp xếp thời gian tập luyện miệt mài ngoài giờ học đòi hỏi sự thấu hiểu, kiên nhẫn và tinh thần đoàn kết cao độ của cả tập thể. Chiếc cúp Giải 3 là minh chứng cho sự nỗ lực chung đó.</li>
+                        <li><strong>Tự tin trước đám đông (Phá vỡ vùng an toàn):</strong> Là dân IT vốn quen với việc ngồi trước màn hình máy tính, việc học nhảy và biểu diễn trước hàng trăm người là một thử thách lớn. Trải nghiệm này giúp mình giải tỏa áp lực, rèn luyện bản lĩnh sân khấu, tự tin và năng động hơn rất nhiều.</li>
                     </ul>
                 </div>
             </div>
 
-            <div class="activity-card reveal delay-2">
-                <div class="activity-img">
-                    <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=800&auto=format&fit=crop" alt="Hoạt động phong trào sinh viên">
+            <div class="vip-card activity-card reveal delay-2" style="margin-top: 3rem;">
+                <div class="activity-img"><img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=800&auto=format&fit=crop" alt="Youth Camp"></div>
+                <div class="card-content activity-content">
+                    <h4>Công Tác Đoàn & Trại Hè Sinh Viên</h4>
+                    <div class="activity-meta"><i data-lucide="users"></i> Đoàn Thanh Niên Đại học Đông Á</div>
+                    <p>Hỗ trợ kỹ thuật và dẫn dắt các hoạt động gắn kết tại sự kiện Trại hè chào đón Tân sinh viên năm nhất.</p>
+                    <button class="btn-small hover-target" style="margin-top: 1rem; width: fit-content;" onclick="openModal('act-3-detail')"><i data-lucide="eye"></i> Chi tiết</button>
                 </div>
-                <div class="activity-content">
-                    <h4>Công Tác Đoàn & Hoạt Động Gắn Kết Sinh Viên</h4>
-                    <div class="activity-meta">
-                        <i data-lucide="users"></i> Đoàn Thanh Niên Đại học Đông Á
-                    </div>
-                    <p>Nhiệt tình tham gia các hoạt động phong trào, thanh niên tình nguyện do Đoàn trường tổ chức. Đồng hành cùng các sự kiện lớn như Trại hè chào đón Tân sinh viên.</p>
-                    <button class="btn-small" style="margin-top: 1rem; width: fit-content;" onclick="openModal('act-3-detail')"><i data-lucide="eye"></i> Xem chi tiết</button>
-                </div>
-
                 <div id="act-3-detail" style="display: none;">
-                    <h3>Công Tác Đoàn & Trại Hè Sinh Viên</h3>
+                    <h3>Công Tác Đoàn & Hoạt Động Trại Hè Sinh Viên</h3>
                     <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=1200&auto=format&fit=crop" class="modal-img">
-                    <p><strong>Mô tả tổng quan:</strong> Tham gia tích cực vào mạng lưới Đoàn Thanh Niên của trường Đại học Đông Á, góp mặt trong nhiều chiến dịch tình nguyện và sự kiện sinh viên.</p>
+                    <p><strong>Mô tả tổng quan:</strong> Tham gia tích cực vào mạng lưới Đoàn Thanh Niên của trường Đại học Đông Á, góp mặt trong nhiều chiến dịch tình nguyện và các sự kiện quy mô lớn dành cho sinh viên.</p>
                     <h4><i data-lucide="tent"></i> Đồng hành cùng Trại hè Tân sinh viên</h4>
                     <ul>
-                        <li>Đóng vai trò hỗ trợ ban tổ chức trong việc hướng dẫn, kết nối các bạn sinh viên năm nhất mới vào trường làm quen với môi trường đại học.</li>
-                        <li>Tham gia setup sân khấu, quản lý trò chơi team-building và xử lý các tình huống phát sinh trong sự kiện.</li>
-                        <li><strong>Kỹ năng thu được:</strong> Nâng cao năng lực giao tiếp, tư duy giải quyết vấn đề linh hoạt và mở rộng mạng lưới quan hệ (networking) cực kỳ tốt.</li>
+                        <li>Đóng vai trò hỗ trợ ban tổ chức trong khâu Technical Support, chuẩn bị sân khấu và quản lý âm thanh/ánh sáng.</li>
+                        <li>Trực tiếp hướng dẫn, kết nối và dẫn dắt các trò chơi team-building giúp các bạn sinh viên năm nhất mới vào trường làm quen với môi trường đại học.</li>
+                        <li><strong>Kỹ năng thu được:</strong> Nâng cao năng lực giao tiếp, rèn luyện tư duy xử lý tình huống linh hoạt dưới áp lực sự kiện thực tế và mở rộng mạng lưới quan hệ (networking) với các anh chị khóa trên.</li>
                     </ul>
                 </div>
             </div>
+
         </div>
     </section>
 
-    <section id="contact" class="reveal">
-        <div class="section-header">
-            <h2>Kết Nối Với Ngọc</h2>
-            <div class="underline"></div>
-            <p style="margin-top: 1.5rem;">Bạn có dự án thú vị hay cơ hội thực tập? Đừng ngần ngại liên hệ nhé!</p>
-        </div>
-        <div style="text-align: center;">
-            <a href="mailto:ngoc.it.dev@gmail.com" class="btn btn-primary">
+    <section id="contact" style="padding-top: 50px; padding-bottom: 100px;">
+        <div class="contact-box reveal">
+            <h2>Sẵn Sàng Kiến Tạo Giá Trị?</h2>
+            <p>Mình luôn cởi mở với những cơ hội thực tập, công việc mới hoặc đơn giản là một buổi cafe trao đổi về công nghệ. Đừng ngần ngại gửi lời chào nhé!</p>
+            <a href="mailto:email-cua-ban@gmail.com" class="btn btn-primary hover-target" style="margin-top: 1.5rem; font-size: 1.1rem; padding: 1rem 3rem;">
                 <i data-lucide="mail"></i> Gửi Email Cho Mình
             </a>
         </div>
@@ -830,7 +709,7 @@
 
     <div id="detail-modal" class="modal-overlay">
         <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()"><i data-lucide="x"></i></span>
+            <span class="close-modal hover-target" onclick="closeModal()"><i data-lucide="x"></i></span>
             <div id="modal-body"></div>
         </div>
     </div>
@@ -838,105 +717,118 @@
     <footer>
         <div class="logo" style="color: white; margin-bottom: 1rem;">NGOC<span>.DEV</span></div>
         <div class="social-links">
-            <a href="https://github.com/Ngocdt3102" target="_blank" title="GitHub">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
-                    <path d="M9 18c-4.51 2-5-2-7-2"/>
-                </svg>
+            <a href="https://github.com/Ngocdt3102" target="_blank" class="hover-target">
+                <i data-lucide="github"></i><span>Cá nhân</span>
             </a>
-            
-            <a href="https://www.linkedin.com/in/dangthongoc-dev" target="_blank" title="LinkedIn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                    <rect width="4" height="12" x="2" y="9"/>
-                    <circle cx="4" cy="4" r="2"/>
-                </svg>
+            <a href="https://www.linkedin.com/in/dangthongoc-dev" target="_blank" class="hover-target">
+                <i data-lucide="linkedin"></i><span>LinkedIn</span>
             </a>
-            
-            <a href="https://www.facebook.com/angngoc.133914" target="_blank" title="Facebook">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-                </svg>
+            <a href="https://www.facebook.com/angngoc.133914" target="_blank" class="hover-target">
+                <i data-lucide="facebook"></i><span>Facebook</span>
             </a>
         </div>
-        <p>&copy; 2026 Đặng Thọ Ngọc. Crafted with passion.</p>
+        <p style="color: #64748b; font-size: 0.9rem;">&copy; 2026 Đặng Thọ Ngọc. Crafted with passion & code.</p>
     </footer>
 
     <script>
-        // Bọc trong DOMContentLoaded để đảm bảo HTML parse xong mới khởi tạo Icon
         document.addEventListener("DOMContentLoaded", function() {
-            // Khởi tạo Lucide Icons
             lucide.createIcons();
 
-            // Hiệu ứng Reveal khi Scroll
-            const observerOptions = { threshold: 0.15 };
+            // Reveal Animation on Scroll
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                        
-                        // Chạy animation cho thanh kỹ năng khi cuộn tới
-                        const progressFills = entry.target.querySelectorAll('.progress-fill');
-                        progressFills.forEach(bar => {
-                            bar.style.width = bar.getAttribute('data-width');
-                        });
-                    }
+                    if (entry.isIntersecting) { entry.target.classList.add('active'); }
                 });
-            }, observerOptions);
-
+            }, { threshold: 0.1 });
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-            // Đổi màu Navbar khi cuộn
+            // Glassmorphism Navbar Scroll
             window.addEventListener('scroll', () => {
                 const navbar = document.getElementById('navbar');
-                if (window.scrollY > 100) {
+                if (window.scrollY > 50) {
                     navbar.style.padding = '0.8rem 10%';
-                    navbar.style.boxShadow = '0 10px 15px -3px rgba(0,0,0,0.1)';
+                    navbar.style.boxShadow = '0 10px 30px rgba(0,0,0,0.05)';
                 } else {
                     navbar.style.padding = '1.2rem 10%';
                     navbar.style.boxShadow = 'none';
                 }
             });
-        });
 
-        // ================= XỬ LÝ MODAL CHI TIẾT =================
-        const modalOverlay = document.getElementById('detail-modal');
-        const modalBody = document.getElementById('modal-body');
-
-        // Hàm mở Modal
-        window.openModal = function(contentId) {
-            // Lấy nội dung HTML từ cái div bị ẩn
-            const contentHTML = document.getElementById(contentId).innerHTML;
+            // Logic Hamburger Menu Mobile
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.querySelector('.nav-links');
             
-            // Bơm nội dung đó vào Modal
-            modalBody.innerHTML = contentHTML;
-            
-            // Render lại Icon bên trong Modal (nếu có dùng data-lucide)
-            lucide.createIcons();
-            
-            // Hiển thị Modal và chặn cuộn trang nền
-            modalOverlay.classList.add('show');
-            document.body.style.overflow = 'hidden';
-        };
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                // Đổi icon menu <-> X
+                const icon = navLinks.classList.contains('active') ? 'x' : 'menu';
+                hamburger.innerHTML = `<i data-lucide="${icon}"></i>`;
+                lucide.createIcons();
+            });
 
-        // Hàm đóng Modal
-        window.closeModal = function() {
-            modalOverlay.classList.remove('show');
-            document.body.style.overflow = 'auto'; // Cho phép cuộn lại
-        };
+            // Đóng menu khi click vào link trên Mobile
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    hamburger.innerHTML = `<i data-lucide="menu"></i>`;
+                    lucide.createIcons();
+                });
+            });
 
-        // Bấm ra vùng đen (overlay) thì tự động đóng Modal
-        modalOverlay.addEventListener('click', function(e) {
-            if (e.target === modalOverlay) {
-                closeModal();
+            // TỐI ƯU: Chỉ chạy Custom Cursor trên thiết bị có chuột (không phải màn hình cảm ứng)
+            if (window.matchMedia("(pointer: fine)").matches) {
+                const dot = document.getElementById('cursor-dot');
+                const outline = document.getElementById('cursor-outline');
+                
+                let mouseX = 0, mouseY = 0;
+                let outlineX = 0, outlineY = 0;
+
+                window.addEventListener('mousemove', (e) => {
+                    mouseX = e.clientX; mouseY = e.clientY;
+                    dot.style.left = `${mouseX}px`;
+                    dot.style.top = `${mouseY}px`;
+                });
+
+                function animateCursor() {
+                    let dx = mouseX - outlineX;
+                    let dy = mouseY - outlineY;
+                    outlineX += dx * 0.15; 
+                    outlineY += dy * 0.15;
+                    outline.style.left = `${outlineX}px`;
+                    outline.style.top = `${outlineY}px`;
+                    requestAnimationFrame(animateCursor);
+                }
+                animateCursor();
+
+                document.querySelectorAll('a, button, .hover-target, .close-modal').forEach(el => {
+                    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+                });
+            } else {
+                // Xóa hẳn HTML của cursor nếu là điện thoại cho nhẹ máy
+                const dot = document.getElementById('cursor-dot');
+                const outline = document.getElementById('cursor-outline');
+                if (dot) dot.remove();
+                if (outline) outline.remove();
+                // Bật lại con trỏ chuột mặc định để tránh lỗi trên một số thiết bị lai
+                document.body.style.cursor = 'auto';
+                document.querySelectorAll('*').forEach(el => el.style.cursor = 'auto');
             }
-        });
-        
-        // Hỗ trợ nhấn phím ESC để đóng Modal cho chuyên nghiệp
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && modalOverlay.classList.contains('show')) {
-                closeModal();
-            }
+
+            // Modal Logic
+            const modalOverlay = document.getElementById('detail-modal');
+            window.openModal = function(id) {
+                document.getElementById('modal-body').innerHTML = document.getElementById(id).innerHTML;
+                lucide.createIcons();
+                modalOverlay.classList.add('show');
+                document.body.style.overflow = 'hidden'; // Ngăn cuộn trang nền
+            };
+            window.closeModal = function() {
+                modalOverlay.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            };
+            modalOverlay.addEventListener('click', (e) => { if(e.target === modalOverlay) closeModal(); });
+            document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
         });
     </script>
 </body>
