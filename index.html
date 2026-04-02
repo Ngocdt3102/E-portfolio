@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặng Thọ Ngọc | ePortfolio</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* CSS VARIABLES - QUẢN LÝ MÀU SẮC */
+        :root {
+            --primary: #2563eb;       /* Xanh dương hiện đại */
+            --primary-light: #dbeafe;
+            --secondary: #64748b;     /* Xám xanh chuyên nghiệp */
+            --bg-white: #ffffff;
+            --bg-light: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #475569;
+            --accent: #3b82f6;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* RESET & BASE STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            line-height: 1.7;
+            background-color: var(--bg-white);
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+
+        ul { list-style: none; }
+        a { text-decoration: none; color: inherit; }
+
+        /* NAVIGATION */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 10%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            transition: var(--transition);
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .logo { font-size: 1.4rem; font-weight: 800; color: var(--text-main); }
+        .logo span { color: var(--primary); }
+
+        .nav-links { display: flex; gap: 2.5rem; }
+        .nav-links a {
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            color: var(--text-muted);
+        }
+        .nav-links a:hover { color: var(--primary); }
+
+        /* HERO SECTION */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%);
+            text-align: center;
+            padding-top: 80px;
+        }
+
+        .hero-content p.intro {
+            color: var(--primary);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content .highlight {
+            background: linear-gradient(to right, #2563eb, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* BUTTONS */
+        .btn-group { display: flex; gap: 1rem; justify-content: center; }
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.4); }
+
+        .btn-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        .btn-outline:hover { background: var(--primary-light); }
+
+        /* SECTION STYLES */
+        section { padding: 100px 10%; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header h2 { font-size: 2.2rem; margin-bottom: 1rem; }
+        .section-header .underline {
+            width: 60px; height: 4px; background: var(--primary); margin: 0 auto; border-radius: 2px;
+        }
+
+        /* ABOUT SECTION */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-img-container {
+            position: relative;
+            background: #e2e8f0;
+            border-radius: 20px;
+            aspect-ratio: 4/5; /* Tỉ lệ phù hợp với chiều cao 1m8 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .about-img-container::after {
+            content: "Portrait Placeholder";
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        .about-text h3 { font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--primary); }
+        .about-text p { margin-bottom: 1.5rem; color: var(--text-muted); }
+
+        .personal-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+        }
+
+        .detail-item strong { display: block; color: var(--text-main); }
+
+        /* SKILLS SECTION */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid #f1f5f9;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .skill-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .skill-card i { color: var(--primary); margin-bottom: 1.2rem; width: 40px; height: 40px; }
+        .skill-card h4 { margin-bottom: 0.8rem; }
+        .skill-card p { font-size: 0.9rem; color: var(--text-muted); }
+
+        /* PROJECTS SECTION */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            border: 1px solid #f1f5f9;
+            transition: var(--transition);
+        }
+
+        .project-card:hover { transform: scale(1.02); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+
+        .project-img {
+            height: 220px;
+            background: #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .project-content { padding: 1.5rem; }
+        .project-content h4 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .project-content p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.2rem; }
+
+        .tech-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .tech-tags span {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 0.2rem 0.7rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* ANIMATION CLASSES */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 4rem 10%;
+            background: #1e293b;
+            color: white;
+            text-align: center;
+        }
+
+        .social-links { margin: 1.5rem 0; display: flex; justify-content: center; gap: 2rem; }
+        .social-links a:hover { color: var(--primary); }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .about-grid { grid-template-columns: 1fr; }
+            nav .nav-links { display: none; } /* Có thể làm thêm menu burger */
+            section { padding: 60px 5%; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <div class="logo">NGOC<span>.DEV</span></div>
+        <ul class="nav-links">
+            <li><a href="#home">Trang chủ</a></li>
+            <li><a href="#about">Giới thiệu</a></li>
+            <li><a href="#skills">Kỹ năng</a></li>
+            <li><a href="#projects">Dự án</a></li>
+            <li><a href="#contact">Liên hệ</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <p class="intro reveal">Chào mừng bạn ghé thăm</p>
+            <h1 class="reveal">Mình là <span class="highlight">Đặng Thọ Ngọc</span></h1>
+            <p class="hero-desc reveal">Sinh viên CNTT đam mê xây dựng giải pháp phần mềm và quản trị hệ thống mạng. Hiện đang là Leader tại các dự án mã nguồn mở.</p>
+            <div class="btn-group reveal">
+                <a href="#projects" class="btn btn-primary">Xem dự án</a>
+                <a href="#contact" class="btn btn-outline">Kết nối ngay</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="section-header reveal">
+            <h2>Về Bản Thân</h2>
+            <div class="underline"></div>
+        </div>
+        <div class="about-grid">
+            <div class="about-img-container reveal">
+                </div>
+            <div class="about-text reveal">
+                <h3>Kỹ sư tương lai từ Nghệ An</h3>
+                <p>Mình là sinh viên năm 3 chuyên ngành CNTT với mong muốn trở thành một Software Engineer chuyên nghiệp. Với tinh thần của một Team Leader, mình luôn ưu tiên sự chính xác, logic và khả năng làm việc nhóm.</p>
+                <p>Ngoài lập trình, mình còn có sở thích đặc biệt với nấu ăn - nơi mình rèn luyện sự tỉ mỉ, và thiết kế hình ảnh AI để khơi gợi tính sáng tạo.</p>
+                
+                <div class="personal-details">
+                    <div class="detail-item"><strong>Họ tên</strong> Đặng Thọ Ngọc</div>
+                    <div class="detail-item"><strong>Học vấn</strong> GPA 2.90 (92 Tín chỉ)</div>
+                    <div class="detail-item"><strong>Ngoại ngữ</strong> Tiếng Anh B1 (Target)</div>
+                    <div class="detail-item"><strong>Vị trí</strong> Leader / Developer</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" style="background: var(--bg-light);">
+        <div class="section-header reveal">
+            <h2>Kỹ Năng Chuyên Môn</h2>
+            <div class="underline"></div>
+        </div>
+        <div class="skills-container">
+            <div class="skill-card reveal">
+                <i data-lucide="smartphone"></i>
+                <h4>Mobile Development</h4>
+                <p>Phát triển ứng dụng đa nền tảng với Flutter & Dart. Tối ưu UI/UX và Database.</p>
+            </div>
+            <div class="skill-card reveal">
+                <i data-lucide="shield-check"></i>
+                <h4>Network Admin</h4>
+                <p>Cấu hình FreeRADIUS, quản trị hệ thống Linux (CentOS), bảo mật xác thực.</p>
+            </div>
+            <div class="skill-card reveal">
+                <i data-lucide="scan-eye"></i>
+                <h4>Computer Vision</h4>
+                <p>Am hiểu Image Processing: Các thuật toán SIFT, SURF, HOG và nhận diện đặc trưng.</p>
+            </div>
+            <div class="skill-card reveal">
+                <i data-lucide="gamepad-2"></i>
+                <h4>Game Development</h4>
+                <p>Xây dựng logic game Dungeon Crawler, xử lý thuật toán va chạm và di chuyển AI.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="section-header reveal">
+            <h2>Dự Án Tiêu Biểu</h2>
+            <div class="underline"></div>
+        </div>
+        <div class="project-grid">
+            <div class="project-card reveal">
+                <div class="project-img">FREE RADIUS SYSTEM</div>
+                <div class="project-content">
+                    <h4>Centralized Auth System</h4>
+                    <p>Vai trò Leader nhóm 4 người. Triển khai hệ thống xác thực người dùng tập trung trên CentOS.</p>
+                    <div class="tech-tags">
+                        <span>Linux</span> <span>RADIUS</span> <span>Network</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card reveal">
+                <div class="project-img">DUNGEON CRAWLER</div>
+                <div class="project-content">
+                    <h4>Maze Adventure Game</h4>
+                    <p>Game nhập vai thám hiểm hang động. Tối ưu thuật toán sinh quái vật và vật phẩm ngẫu nhiên.</p>
+                    <div class="tech-tags">
+                        <span>C++</span> <span>OOP</span> <span>Game Logic</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card reveal">
+                <div class="project-img">VOCABULARY APP</div>
+                <div class="project-content">
+                    <h4>Flutter Word Learning</h4>
+                    <p>Ứng dụng học từ vựng tiếng Anh với Dataset quy mô lớn và giao diện mượt mà.</p>
+                    <div class="tech-tags">
+                        <span>Flutter</span> <span>Dart</span> <span>JSON Data</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="reveal">
+        <div class="section-header">
+            <h2>Kết Nối Với Ngọc</h2>
+            <div class="underline"></div>
+            <p style="margin-top: 1.5rem;">Bạn có dự án thú vị? Đừng ngần ngại liên hệ nhé!</p>
+        </div>
+        <div style="text-align: center;">
+            <a href="mailto:ngoc.it.dev@gmail.com" class="btn btn-primary">Gửi Email Cho Mình</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="logo" style="color: white;">NGOC<span>.DEV</span></div>
+        <div class="social-links">
+            <a href="#"><i data-lucide="github"></i></a>
+            <a href="#"><i data-lucide="linkedin"></i></a>
+            <a href="#"><i data-lucide="facebook"></i></a>
+        </div>
+        <p>&copy; 2026 Đặng Thọ Ngọc. Crafted with passion.</p>
+    </footer>
+
+    <script>
+        // Khởi tạo Lucide Icons
+        lucide.createIcons();
+
+        // Hiệu ứng Reveal khi Scroll
+        const observerOptions = {
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Đổi màu Navbar khi cuộn
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.style.padding = '0.8rem 10%';
+                navbar.style.boxShadow = '0 10px 15px -3px rgba(0,0,0,0.1)';
+            } else {
+                navbar.style.padding = '1.2rem 10%';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
