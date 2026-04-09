@@ -1,0 +1,430 @@
+/* ================= CSS VARIABLES VIP ================= */
+:root {
+    --primary: #4f46e5;
+    --primary-light: #e0e7ff;
+    --secondary: #0ea5e9;
+    --bg-white: #ffffff;
+    --bg-light: #f8fafc;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --accent: #38bdf8;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* ================= RESET & BASE ================= */
+* { margin: 0; padding: 0; box-sizing: border-box;  }
+body {
+    /* Đổi từ Inter sang Be Vietnam Pro */
+    font-family: 'Be Vietnam Pro', sans-serif; 
+    color: var(--text-main);
+    line-height: 1.7;
+    background-color: var(--bg-light);
+    background-image: radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.05) 0%, transparent 20%),
+                         radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.05) 0%, transparent 20%);
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+        
+h1, h2, h3, h4 { 
+    /* Đổi từ Poppins sang Montserrat */
+    font-family: 'Montserrat', sans-serif; 
+    font-weight: 700; 
+    letter-spacing: -0.02em; 
+}
+ul { list-style: none; }
+a { text-decoration: none; color: inherit; }
+svg.lucide { width: 24px; height: 24px; stroke-width: 2; }
+
+
+/* ================= NAVIGATION ================= */
+nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 10%; position: fixed; width: 100%; top: 0;
+    background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    z-index: 1000; transition: var(--transition); border-bottom: 1px solid var(--glass-border);
+}
+.logo { font-size: 1.5rem; font-weight: 800; color: var(--text-main); }
+.logo span { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.nav-links { display: flex; gap: 2.5rem; }
+.nav-links a { font-weight: 500; font-size: 0.95rem; color: var(--text-muted); transition: var(--transition); position: relative; }
+.nav-links a::after {
+    content: ''; position: absolute; width: 0; height: 2px;
+    bottom: -5px; left: 0; background: var(--primary); transition: var(--transition);
+}
+.nav-links a:hover { color: var(--primary); }
+.nav-links a:hover::after { width: 100%; }
+
+.hamburger { display: none; cursor: pointer; color: var(--text-main); z-index: 1001; }
+
+/* ================= HERO SECTION ================= */
+.hero {
+    height: 100vh; display: flex; align-items: center; justify-content: center;
+    text-align: center; padding-top: 80px; position: relative;
+}
+.hero::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background-image: linear-gradient(rgba(79, 70, 229, 0.05) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(79, 70, 229, 0.05) 1px, transparent 1px);
+    background-size: 30px 30px; z-index: -1;
+}
+.hero-content p.intro {
+    display: inline-block; padding: 0.5rem 1.5rem; border-radius: 50px;
+    background: var(--primary-light); color: var(--primary);
+    font-weight: 600; letter-spacing: 1px; margin-bottom: 1.5rem;
+    border: 1px solid rgba(79, 70, 229, 0.2);
+}
+.hero-content h1 { font-size: 4.5rem; line-height: 1.1; margin-bottom: 1.5rem; }
+.hero-content .highlight {
+    background: linear-gradient(to right, #4f46e5, #0ea5e9, #4f46e5);
+    background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    animation: shine 4s linear infinite;
+}
+@keyframes shine { to { background-position: 200% center; } }
+
+.hero-desc { font-size: 1.25rem; color: var(--text-muted); max-width: 650px; margin: 0 auto 2.5rem; }
+
+.btn-group { display: flex; gap: 1.5rem; justify-content: center; }
+.btn {
+    padding: 0.8rem 2.2rem; border-radius: 12px; font-weight: 600; transition: var(--transition);
+    display: inline-flex; align-items: center; gap: 0.5rem; position: relative; overflow: hidden;
+}
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white;
+    box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4); border: none;
+}
+.btn-primary::before {
+    content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: 0.5s;
+}
+.btn-primary:hover::before { left: 100%; }
+.btn-primary:hover { transform: translateY(-5px); box-shadow: 0 15px 25px -5px rgba(79, 70, 229, 0.5); }
+
+.btn-outline {
+    background: var(--glass-bg); border: 2px solid var(--primary); color: var(--primary);
+    backdrop-filter: blur(5px);
+}
+.btn-outline:hover { background: var(--primary); color: white; transform: translateY(-5px); }
+
+/* ================= SECTIONS BASE ================= */
+section { padding: 100px 10%; position: relative; }
+.section-header { text-align: center; margin-bottom: 4rem; }
+.section-header h2 { font-size: 2.5rem; margin-bottom: 1rem; color: var(--text-main); }
+.section-header .underline {
+    width: 80px; height: 5px; margin: 0 auto; border-radius: 5px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+}
+
+/* ================= ABOUT VIP ================= */
+.about-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 2fr; /* Đổi tỷ lệ thành 1:2 */
+    gap: 4rem; 
+    align-items: start; /* Căn nội dung lên sát mép trên */
+}
+
+/* Lớp bọc ngoài để giữ ảnh đứng im khi cuộn (Sticky Effect) */
+.about-img-wrapper {
+    position: sticky;
+    top: 120px; /* Khoảng cách từ đỉnh màn hình khi cuộn */
+    z-index: 10;
+}
+
+.about-img-container {
+    position: relative; border-radius: 24px; aspect-ratio: 4/5;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+}
+.about-img-container::after {
+    content: ''; position: absolute; top: -15px; left: -15px; right: 15px; bottom: 15px;
+    border: 2px dashed var(--primary); border-radius: 24px; z-index: -1; transition: var(--transition);
+}
+.about-img-container:hover::after { top: -20px; left: -20px; right: 20px; bottom: 20px; }
+.about-img-container img { width: 100%; height: 100%; object-fit: cover; border-radius: 24px; }
+
+.about-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* Tạo khoảng cách đều đặn giữa các phần nội dung mới */
+}
+
+.about-text h3 { font-size: 2.2rem; margin-bottom: 0.5rem; color: var(--text-main); }
+.about-text p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.8;}
+
+.personal-details {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Tự động chia cột linh hoạt */
+    gap: 1.5rem; 
+    background: rgba(255,255,255,0.6); backdrop-filter: blur(10px);
+    padding: 2rem; border-radius: 16px; border: 1px solid var(--glass-border);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+}
+.detail-item strong { display: block; color: var(--primary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;}
+.detail-item span { font-weight: 600; color: var(--text-main); font-size: 1.1rem; }
+
+/* Các khối nội dung thêm vào */
+.about-extra-box {
+    padding-top: 1.5rem; 
+    border-top: 1px dashed rgba(79, 70, 229, 0.3);
+}
+.about-extra-title {
+    color: var(--primary); font-size: 0.9rem; text-transform: uppercase; 
+    letter-spacing: 1px; display: flex; align-items: center; margin-bottom: 1.5rem; font-weight: 700;
+}
+
+/* ================= SKILLS (RUY BĂNG CHUYỂN ĐỘNG VIP) ================= */
+.skills-ribbons-wrapper { display: flex; flex-direction: column; gap: 1.5rem; overflow: hidden; padding: 2rem 0; }
+.marquee-container { width: 100%; overflow: hidden; white-space: nowrap; position: relative; }
+.marquee-container::before, .marquee-container::after {
+    content: ''; position: absolute; top: 0; width: 150px; height: 100%; z-index: 2;
+}
+.marquee-container::before { left: 0; background: linear-gradient(to right, var(--bg-light) 0%, transparent 100%); }
+.marquee-container::after { right: 0; background: linear-gradient(to left, var(--bg-light) 0%, transparent 100%); }
+
+.marquee-content { display: inline-flex; gap: 1.5rem; padding-right: 1.5rem; animation: scrollLeft 25s linear infinite; }
+.marquee-content.reverse { animation: scrollRight 30s linear infinite; }
+.marquee-container:hover .marquee-content { animation-play-state: paused; }
+
+@keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+@keyframes scrollRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+
+.skill-badge {
+    display: inline-flex; align-items: center; gap: 1rem;
+    background: white; padding: 1rem 1.5rem; border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #e2e8f0; transition: var(--transition);
+}
+.skill-badge:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px rgba(79, 70, 229, 0.15); border-color: var(--primary); }
+.skill-badge i { color: var(--primary); width: 24px; height: 24px; }
+.skill-badge .name { font-weight: 700; font-size: 1rem; color: var(--text-main); }
+.skill-badge .level { font-size: 0.85rem; color: var(--primary); background: var(--primary-light); padding: 0.2rem 0.8rem; border-radius: 20px; font-weight: 600;}
+
+/* ================= CARDS VIP (PROJECTS & ACTIVITIES) ================= */
+.project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 3rem; }
+
+.vip-card {
+    background: white; border-radius: 20px; overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid rgba(255,255,255,0.8);
+    transition: var(--transition); position: relative;
+}
+.vip-card:hover {
+    transform: translateY(-12px); box-shadow: 0 30px 60px -10px rgba(79, 70, 229, 0.15); border-color: var(--primary-light);
+}
+.card-img { height: 220px; overflow: hidden; position: relative; }
+.card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); }
+.vip-card:hover .card-img img { transform: scale(1.1); }
+
+.card-content { padding: 2rem; }
+.card-content h4 { font-size: 1.3rem; margin-bottom: 0.8rem; color: var(--text-main); }
+.card-content p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6;}
+
+.tech-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.5rem; }
+.tech-tags span { background: var(--bg-light); color: var(--text-main); padding: 0.4rem 1rem; border-radius: 8px; font-size: 0.75rem; font-weight: 600; border: 1px solid #e2e8f0; }
+
+.card-actions { display: flex; gap: 1rem; border-top: 1px solid #f1f5f9; padding-top: 1.5rem; }
+.btn-small { background: white; border: 1px solid #e2e8f0; padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 600; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.4rem; transition: var(--transition); }
+.btn-small:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+/* ================= ACTIVITIES CARD OVERRIDE ================= */
+.activity-card { 
+    display: flex; 
+    flex-direction: row; 
+    align-items: stretch;
+}
+
+.activity-img { 
+    width: 45%; 
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.activity-img img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover;
+    position: absolute;
+    top: 0; 
+    left: 0;
+    transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.activity-card:hover .activity-img img {
+    transform: scale(1.1);
+}
+
+.activity-content { 
+    width: 55%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.activity-meta { 
+    display: flex; 
+    align-items: center; 
+    gap: 0.5rem; 
+    color: var(--primary); 
+    font-size: 0.9rem; 
+    font-weight: 600; 
+    margin-bottom: 1rem; 
+}
+
+/* ================= MODAL CHI TIẾT SPLIT LAYOUT VIP ================= */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    z-index: 2000; display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.modal-overlay.show { opacity: 1; visibility: visible; }
+
+/* Khung Modal chia 2 cột */
+.modal-box {
+    display: flex; flex-direction: row;
+    background: var(--bg-white); width: 95%; max-width: 1200px; height: 85vh;
+    border-radius: 24px; overflow: hidden; position: relative;
+    transform: scale(0.9) translateY(30px); opacity: 0; 
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255,255,255,0.1);
+}
+.modal-overlay.show .modal-box { transform: scale(1) translateY(0); opacity: 1; }
+
+/* Cột Trái: Chứa Media (Ảnh/Video) */
+.modal-media-section {
+    width: 50%; background: #0f172a; position: relative;
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+
+/* Cột Phải: Chứa Nội dung chữ */
+.modal-info-section {
+    width: 50%; padding: 3.5rem 3rem; overflow-y: auto; background: var(--bg-white);
+}
+
+/* Custom Scrollbar cho cột nội dung */
+.modal-info-section::-webkit-scrollbar { width: 6px; }
+.modal-info-section::-webkit-scrollbar-track { background: transparent; }
+.modal-info-section::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 10px; }
+.modal-info-section::-webkit-scrollbar-thumb:hover { background-color: #94a3b8; }
+
+/* Nút Close bám góc phải của Modal Box */
+.close-modal {
+    position: absolute; top: 1.5rem; right: 1.5rem; cursor: pointer;
+    background: var(--bg-light); border: 1px solid #e2e8f0; border-radius: 50%;
+    width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); transition: all 0.25s ease; z-index: 100;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.close-modal:hover { background: #fee2e2; color: #ef4444; border-color: #fca5a5; transform: rotate(90deg) scale(1.1); }
+
+/* ================= SLIDESHOW MIXED (ẢNH & VIDEO) TỐI ƯU KÍCH THƯỚC ================= */
+.slider-item {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    opacity: 0; transition: opacity 0.4s ease-in-out; z-index: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: #000; /* Nền đen để hiển thị ảnh ngang/dọc không bị viền trắng */
+    padding: 1rem; /* Thêm khoảng lề nhỏ để hình/video không dính sát viền */
+}
+.slider-item.active { opacity: 1; z-index: 1; }
+
+/* Ép ảnh giữ đúng tỷ lệ, không bị phóng to hay cắt xén */
+.slider-item img {
+    max-width: 100%; max-height: 100%; object-fit: contain;
+}
+
+/* Ép video (iframe youtube & video mp4 local) giữ đúng tỷ lệ */
+.slider-item iframe,
+.slider-item video {
+    width: 100%; max-height: 100%; border: none; object-fit: contain;
+}
+
+.slider-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.3);
+    color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; z-index: 10; transition: all 0.3s;
+}
+.slider-btn:hover { background: rgba(255,255,255,0.4); transform: translateY(-50%) scale(1.1); }
+.prev-btn { left: 1rem; }
+.next-btn { right: 1rem; }
+
+.slider-dots {
+    position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 8px; z-index: 10; background: rgba(0,0,0,0.3); padding: 6px 12px; border-radius: 20px; backdrop-filter: blur(4px);
+}
+.dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; transition: 0.3s; }
+.dot.active { background: white; transform: scale(1.3); }
+
+/* Định dạng Text trong Modal */
+.modal-info-section h3 { 
+    font-family: 'Montserrat', sans-serif; color: var(--text-main); 
+    font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2; padding-right: 30px; 
+}
+.modal-info-section .tech-tags { margin-bottom: 2rem; }
+.modal-info-section h4 { margin-top: 2rem; margin-bottom: 1rem; color: var(--primary); font-size: 1.2rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.modal-info-section ul { list-style-type: none; padding-left: 0; margin-bottom: 1.5rem; }
+.modal-info-section ul li { position: relative; padding-left: 1.5rem; margin-bottom: 0.8rem; color: var(--text-muted); line-height: 1.6; }
+.modal-info-section ul li::before { content: "▹"; position: absolute; left: 0; color: var(--primary); font-weight: bold; }
+.modal-info-section p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.25rem; }
+
+/* Responsive Mobile */
+@media (max-width: 992px) {
+    .modal-box { flex-direction: column; height: 90vh; overflow-y: auto; }
+    .modal-media-section { width: 100%; height: 35vh; min-height: 250px; flex-shrink: 0; }
+    /* Giảm padding để có thêm không gian hiển thị video trên điện thoại */
+    .slider-item { padding: 0.5rem; } 
+    .modal-info-section { width: 100%; padding: 2rem 1.5rem; overflow-y: visible; }
+    .close-modal { top: 10px; right: 10px; background: rgba(255,255,255,0.8); backdrop-filter: blur(5px); }
+}
+/* ================= CONTACT SECTION VIP ================= */
+.contact-box {
+    background: linear-gradient(135deg, var(--bg-white), var(--primary-light));
+    border-radius: 24px; padding: 4rem 2rem; text-align: center;
+    box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.15);
+    border: 1px solid rgba(255,255,255,0.8); max-width: 800px; margin: 0 auto;
+}
+.contact-box h2 { font-size: 2.5rem; color: var(--text-main); margin-bottom: 1rem; }
+.contact-box p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+/* ================= ANIMATIONS ================= */
+.reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
+.reveal.active { opacity: 1; transform: translateY(0); }
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+
+/* ================= FOOTER VIP ================= */
+footer { padding: 4rem 10%; background: #0f172a; color: white; text-align: center; position: relative; overflow: hidden;}
+footer::before { content:''; position: absolute; top:0; left:50%; transform: translateX(-50%); width: 80%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); }
+.social-links { margin: 2rem 0; display: flex; justify-content: center; gap: 3rem; }
+.social-links a { color: #cbd5e1; transition: var(--transition); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.social-links a svg { width: 36px; height: 36px; padding: 6px; border-radius: 12px; background: rgba(255,255,255,0.05); transition: var(--transition);}
+.social-links a:hover svg { background: var(--primary); transform: translateY(-5px); color: white;}
+.social-links a span { font-size: 0.8rem; font-weight: 600; opacity: 0.7; }
+
+/* ================= RESPONSIVE & MOBILE MENU ================= */
+@media (max-width: 992px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .activity-card { flex-direction: column; }
+    .activity-img, .activity-content { width: 100%; }
+    .activity-img { height: 250px; }
+}
+@media (max-width: 768px) {
+    .hero-content h1 { font-size: 2.8rem; }
+    section { padding: 60px 5%; }
+    .btn-group { flex-direction: column; }
+    
+    /* Mobile Menu */
+    .hamburger { display: block; }
+    .nav-links {
+        position: fixed; top: 0; right: -100%; height: 100vh; width: 70%;
+        background: var(--bg-white); flex-direction: column; align-items: center;
+        justify-content: center; transition: right 0.4s ease;
+        box-shadow: -10px 0 30px rgba(0,0,0,0.1); z-index: 1000;
+    }
+    .nav-links.active { right: 0; }
+    .nav-links li { margin: 1.5rem 0; }
+    .nav-links a { font-size: 1.2rem; }
+    
+    .contact-box { padding: 3rem 1.5rem; }
+    .contact-box h2 { font-size: 2rem; }
+}
